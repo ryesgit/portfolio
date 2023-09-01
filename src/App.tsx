@@ -1,11 +1,11 @@
-import Header from "./components/Header/Header"
-// import './outline.css';
+import Home from "./pages/Home/Home"
+import "./App.css"
 
 function App() {
 
   return (
     <>
-      <Header />
+      <Home />
     </>
   )
 }

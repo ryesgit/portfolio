@@ -1,5 +1,6 @@
 header {
-    background-color: rgb(122, 12, 12);
+    /* background-color: rgb(122, 12, 12); */
+    background: linear-gradient(45deg, rgb(129, 11, 11), rgb(39, 3, 3));
     color: white;
     display: flex;
     justify-content: space-between;
@@ -15,12 +16,4 @@ header > ul {
 header > ul > li {
     list-style-type: none;
     margin-left: 1rem;
-}
-
-header > #logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-items: center;
-    margin: 0;
 }
