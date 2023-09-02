@@ -3,7 +3,7 @@
 import Header from "../../components/Header/Header"
 import Dashes from "../../components/ui/Dashes"
 import "./Home.css"
-import Hero from "./components/Hero"
+import Hero from "./components/Hero/Hero"
 
 function Home() {
 
