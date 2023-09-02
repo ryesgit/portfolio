@@ -29,9 +29,9 @@ const Hero = ({ id } : { id?:string }) => {
                 <h1>Lee Ryan Soliman</h1>
                 <h2>Student, Developer, Problem Solver</h2>
                 <p>
-                    incoming Computer Engineering sophomore; <br />
-                    helping clients with tech problems through freelance work, <br />
-                    while building fun toy projects on the side
+                    Incoming Computer Engineering sophomore; <br />
+                    Helping clients with tech problems through freelance work, <br />
+                    While building fun toy projects on the side
                 </p>
                 </article>
             </motion.div>
