@@ -1,3 +1,4 @@
+import RedIcon from "../../../../components/ui/RedIcon/index";
 import projects from "./data/projects";
 
 const Projects = () => {
@@ -8,12 +9,15 @@ const Projects = () => {
       {
         projects.map((project) => {
           return (
-            <div key={project.name}>
+            <div key={project.name} style={{textAlign: "center"}}>
               <h3>{project.name}</h3>
+              <h3>Technologies Used</h3>
               {
                 project.technologiesUsed.map((technology, index) => {
                   return (
-                    <span key={index}>{technology}</span>
+                    <span key={index}>{
+                      <RedIcon Icon={technology}/>
+                    }</span>
                   )
                 })
               }
