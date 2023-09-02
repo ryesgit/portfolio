@@ -12,7 +12,11 @@ function Home() {
       <Header />
       <main>
           <Dashes color="red" />
-          <Logo />
+          <Logo style={{
+            width: "10rem",
+            maxHeight: "10rem",
+            marginTop: "1rem"
+          }}/>
       </main>
     </>
   )
