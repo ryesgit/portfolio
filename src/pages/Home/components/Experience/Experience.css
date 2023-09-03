@@ -1,0 +1,14 @@
+.experience {
+    border-left: 2px dashed indianred;
+    padding-left: 1rem;
+}
+
+.experience > ul > li {
+    margin: 0.5rem 0;
+}
+
+.experience > ul > li::before {
+    content: "▹ ";
+    margin: 0;
+    padding: 0;
+}
