@@ -1,5 +1,6 @@
 // import './outline.css';
 
+import Container from "../../components/Container/index"
 import Header from "../../components/Header/Header"
 import Dashes from "../../components/ui/Dashes"
 import "./Home.css"
@@ -13,33 +14,24 @@ function Home() {
   return (
     <>
       <Header />
-      <main>
-
+      <Container>
+        <main>
+          <Dashes color="indianred" />
+          <Hero id="hero" />
+          <Dashes color="indianred" />
+          <Projects />
+          <Dashes color="indianred" />
+          <Experience />
+          <Dashes color="indianred" />
+          <Education />
+        </main>
         <Dashes color="indianred" />
-
-        <Hero id="hero" />
-
-        <Dashes color="indianred" />
-
-        <Projects />
-
-        <Dashes color="indianred" />
-
-        <Experience />
-
-        <Dashes color="indianred" />
-
-        <Education />
-
-      </main>
-
-      <Dashes color="indianred" />
-
-      <aside>
-        <footer style={{textAlign: "center"}}>
-        © Soliman, { new Date().getFullYear() }
-        </footer>
-      </aside>
+        <aside>
+          <footer style={{textAlign: "center"}}>
+          © Soliman, { new Date().getFullYear() }
+          </footer>
+        </aside>
+      </Container>
     </>
   )
 }
