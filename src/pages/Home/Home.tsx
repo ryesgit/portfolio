@@ -13,11 +13,11 @@ function Home() {
       <Header />
       <main>
 
-        <Dashes color="red" />
+        <Dashes color="indianred" />
 
         <Hero id="hero" />
 
-        <Dashes color="red" />
+        <Dashes color="indianred" />
 
         <Projects />
 

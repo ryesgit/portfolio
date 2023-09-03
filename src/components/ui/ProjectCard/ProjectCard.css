@@ -1,6 +1,7 @@
 section {
+    color: white;
     padding: 1rem;
-    background-color: aquamarine;
+    background-color: rgb(39, 3, 3);
     border-radius: 1rem .5rem;
     text-align: center;
 }
