@@ -16,7 +16,7 @@ const experiences: experience[] = [
                     "First time working with a team.",
                     "Built the backend of a calendar application that\
                      integrated Google Calendar and Microsoft Outlook\
-                     Calendar using Node.js, Express.js, and MongoDB.",
+                     Calendar using Express.js and MongoDB.",
                     
                     "Wrote an automatic email-sending script that takes\
                     a list of emails and sends each a message using\
