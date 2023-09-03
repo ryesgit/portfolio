@@ -1,13 +1,16 @@
 import { ReactNode } from "react";
 import RedIcon from "../RedIcon/index";
 import "./ProjectCard.css";
+import Slideshow from "../Slideshow/index";
 
 const ProjectCard = ({ title, images, technologiesUsed, key } : { title: string, images?: string[], technologiesUsed:ReactNode[], key: string }) => {
   return (
     <section key={key}>
         <h3>{title}</h3>
         
-        <div id="technology">
+        <Slideshow images={images!}/>
+
+        <div id="technologies">
             {
                 technologiesUsed.map((technology, index) => {
                     return (
