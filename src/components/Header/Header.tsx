@@ -1,11 +1,10 @@
-import Logo from '../ui/Logo/Logo';
 import './Header.css';
 
 const Header = () => {
   return (
     <header>
 
-      <Logo />
+      <h1>Lee</h1>
 
       <ul>
         <li>Home</li>
