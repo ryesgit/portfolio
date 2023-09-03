@@ -19,6 +19,8 @@ const Projects = () => {
                   title={project.name}
                   images={project.projectImages}
                   technologiesUsed={project.technologiesUsed}
+                  liveLink={project.liveLink}
+                  githubLink={project.githubLink}
                   key={project.name}
                   />
               )

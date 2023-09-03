@@ -1,8 +1,19 @@
 import { ReactNode } from "react";
 import RedIcon from "../RedIcon/index";
+import { SiGithub } from "react-icons/si";
+import { FiGlobe } from "react-icons/fi";
 import "./ProjectCard.css";
 
-const ProjectCard = ({ title, images, technologiesUsed, key } : { title: string, images?: ReactNode, technologiesUsed:ReactNode[], key: string }) => {
+interface ProjectCardProps {
+    title: string,
+    images?: ReactNode,
+    technologiesUsed: ReactNode[],
+    githubLink?: string,
+    liveLink?: string,
+    key: string
+}
+
+const ProjectCard = ({ title, images, technologiesUsed, githubLink, liveLink, key } : ProjectCardProps) => {
   return (
     <section key={key}>
         <h3>{title}</h3>
@@ -24,7 +35,19 @@ const ProjectCard = ({ title, images, technologiesUsed, key } : { title: string,
                 })
             }
         </div>
-
+        
+        <div className="links">
+            {
+                githubLink && (<span>
+                    <SiGithub /> <a href={githubLink}>Github</a>
+                </span>)
+            }
+            {
+                liveLink && (<span>
+                    <FiGlobe /> <a href={liveLink}>Live Link</a>
+                </span>)
+            }
+        </div>
 
     </section>
   )

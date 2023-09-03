@@ -16,6 +16,19 @@ section {
     display: flex;
 }
 
+.links {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.links > span > a {
+    text-decoration: none;
+}
+
+.links > span > a:visited {
+    color: white;
+}
+
 @media screen and (max-width: 600px) {
     section {
         max-width: 80%;
