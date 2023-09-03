@@ -4,13 +4,16 @@ import { motion } from "framer-motion";
 import "./Projects.css";
 
 const Projects = () => {
+
   return (
     <>
       <h2>Projects</h2>
 
       <motion.div
         initial={{scale: 0}}
-        whileInView={{scale: 1}}>
+        whileInView={{scale: 1}}
+        viewport={{ margin: "75%" }}
+        >
         <div className="projects">
           {
             projects.map((project) => {
