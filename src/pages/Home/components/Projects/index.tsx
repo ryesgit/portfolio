@@ -22,7 +22,7 @@ const Projects = () => {
                   liveLink={project.liveLink}
                   githubLink={project.githubLink}
                   key={project.name}
-                  />
+                />
               )
             })
           }

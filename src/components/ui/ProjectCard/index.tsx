@@ -9,13 +9,12 @@ interface ProjectCardProps {
     images?: ReactNode,
     technologiesUsed: ReactNode[],
     githubLink?: string,
-    liveLink?: string,
-    key: string
+    liveLink?: string
 }
 
-const ProjectCard = ({ title, images, technologiesUsed, githubLink, liveLink, key } : ProjectCardProps) => {
+const ProjectCard = ({ title, images, technologiesUsed, githubLink, liveLink } : ProjectCardProps) => {
   return (
-    <section key={key}>
+    <section key={title}>
         <h3>{title}</h3>
         
         <div>

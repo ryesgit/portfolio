@@ -6,20 +6,24 @@ const Slideshow = ({ images }: { images: string[] }) => {
     const slides = images;
     const [active, setActive] = useState(1);
 
-    const next = () => setActive(active < slides.length ? active + 1 : 1);
+    const next = () => setActive(active + 1);
   
     useEffect(() => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             next();
         }, 3000);
+
+        return () => { clearInterval(timer) }
     }, [active, next]);
     
     return (
         <div>
             <AnimatePresence>
-                {slides.map((slide) => {
-                return <Slide slide={slide} isActive={slides.indexOf(slide) === active % slides.length} />;
-                })}
+                {
+                    slides.map((slide, index) => {
+                    return <Slide key={index} slide={slide} isActive={slides.indexOf(slide) === (active % slides.length)} />;
+                    })
+                }
             </AnimatePresence>
         </div>
     )
