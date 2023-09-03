@@ -6,7 +6,7 @@ import "./Projects.css";
 const Projects = () => {
 
   return (
-    <>
+    <section id="projects">
       <h2>Projects</h2>
 
       <motion.div
@@ -32,7 +32,7 @@ const Projects = () => {
         </div>
       </motion.div>
 
-    </>
+    </section>
   )
 }
 

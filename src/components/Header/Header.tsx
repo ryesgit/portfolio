@@ -6,12 +6,22 @@ const Header = () => {
 
       <h1>Lee</h1>
 
-      <ul>
-        <li>Home</li>
-        <li>Projects</li>
-        <li>Experience</li>
-        <li>Education</li>
-      </ul>
+      <nav>
+        <ul>
+          <a href="#hero">
+            <li>Home</li>
+          </a>
+          <a href="#projects">
+            <li>Projects</li>
+          </a>
+          <a href="#experience">
+            <li>Experience</li>
+          </a>
+          <a href="#education">
+            <li>Education</li>
+          </a>
+        </ul>
+      </nav>
       
     </header>
   )

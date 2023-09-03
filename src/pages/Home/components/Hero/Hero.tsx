@@ -4,7 +4,7 @@ import "./Hero.css"
 
 const Hero = ({ id } : { id?:string }) => {
   return (
-        <main id={id}>
+        <section id={id}>
             <motion.div
             initial={{ scale: 0 }}
             animate={{ rotate: 360, scale: 1 }}
@@ -36,7 +36,7 @@ const Hero = ({ id } : { id?:string }) => {
                 </article>
             </motion.div>
 
-        </main>
+        </section>
   )
 }
 
