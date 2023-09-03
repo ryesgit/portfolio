@@ -32,6 +32,14 @@ function Home() {
         <Education />
 
       </main>
+
+      <Dashes color="indianred" />
+
+      <aside>
+        <footer style={{textAlign: "center"}}>
+        © Soliman, { new Date().getFullYear() }
+        </footer>
+      </aside>
     </>
   )
 }
