@@ -1,0 +1,10 @@
+section {
+    padding: 1rem;
+    background-color: aquamarine;
+    border-radius: 1rem .5rem;
+    text-align: center;
+}
+
+#technology {
+    display: flex;
+}
