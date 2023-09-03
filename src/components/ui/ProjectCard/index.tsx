@@ -14,7 +14,7 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ title, images, technologiesUsed, githubLink, liveLink } : ProjectCardProps) => {
   return (
-    <section key={title}>
+    <section id="project" key={title}>
         <h3>{title}</h3>
         
         <div>

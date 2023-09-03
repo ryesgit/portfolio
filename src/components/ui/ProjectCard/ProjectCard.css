@@ -1,4 +1,4 @@
-section {
+#project {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,7 +30,7 @@ section {
 }
 
 @media screen and (max-width: 600px) {
-    section {
+    #project {
         max-width: 80%;
     }
 }
