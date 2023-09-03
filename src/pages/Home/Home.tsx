@@ -3,6 +3,7 @@
 import Header from "../../components/Header/Header"
 import Dashes from "../../components/ui/Dashes"
 import "./Home.css"
+import Education from "./components/Education/index"
 import Experience from "./components/Experience/index"
 import Hero from "./components/Hero/Hero"
 import Projects from "./components/Projects/index"
@@ -25,6 +26,10 @@ function Home() {
         <Dashes color="indianred" />
 
         <Experience />
+
+        <Dashes color="indianred" />
+
+        <Education />
 
       </main>
     </>

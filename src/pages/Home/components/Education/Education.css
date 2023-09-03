@@ -1,0 +1,8 @@
+#education {
+    width: 100%;
+}
+
+.education {
+    border-left: 2px dashed indianred;
+    padding-left: 1rem;
+}
