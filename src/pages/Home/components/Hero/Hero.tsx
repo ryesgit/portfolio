@@ -1,8 +1,14 @@
 import { motion } from "framer-motion";
 import "./Hero.css";
 import logo from "../../../../assets/logo.jpg";
+import links from "./data/links";
+import { useContext } from "react";
+import DarkModeContext from "../../../../contexts/DarkModeProvider";
 
 const Hero = ({ id } : { id?:string }) => {
+
+    const { dark } = useContext(DarkModeContext)
+
   return (
         <section id={id}>
             <motion.div
@@ -28,6 +34,26 @@ const Hero = ({ id } : { id?:string }) => {
             <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}>
+
+                <div className="links">
+
+                    {
+                        links.map((link, index) => {
+                            return (
+                                <span id="link" key={index} className={`${ !dark ? "lightLink" : "" }`}>
+                                    <a href={link.url} target="_blank" rel="noreferrer">
+                                        {link.icon} <br /> 
+                                            <p>
+                                            {link.platform}
+                                            </p>
+                                    </a>
+                                </span>
+                            )
+                        })
+                    }
+
+                </div>
+
                 <article>
                 <h1>Lee Ryan Soliman</h1>
                 <h2>Student, Developer, Problem Solver</h2>

@@ -8,7 +8,15 @@ article {
     margin: 1rem 0;
 }
 
-p {
+article > p {
     line-height: 2rem;
     font-size: 1.2rem;
+}
+
+.lightLink p{
+    color: black;
+}
+
+.lightLink svg {
+    fill: black;
 }
