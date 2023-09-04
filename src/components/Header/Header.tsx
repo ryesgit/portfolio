@@ -1,3 +1,4 @@
+import HamburgerMenu from '../ui/HamburgerMenu/index';
 import './Header.css';
 
 const Header = () => {
@@ -5,6 +6,8 @@ const Header = () => {
     <header>
 
       <h1>Lee</h1>
+
+      <HamburgerMenu id="hamburger-menu" />
 
       <nav>
         <ul>

@@ -1,0 +1,11 @@
+#bars {
+    display: flex;
+    flex-direction: column;
+    row-gap: .25rem;
+}
+
+.bars {
+    width: 2rem;
+    height: .25rem;
+    background: white;
+}

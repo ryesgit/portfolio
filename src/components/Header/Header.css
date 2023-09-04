@@ -56,8 +56,26 @@ header a:visited {
     text-decoration: none;
 }
 
+header #hamburger-menu {
+    display: none;
+}
+
 @media screen and (max-width: 500px) {
     header > nav > ul {
         display: none;
+    }
+
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    header h1 {
+        justify-content: flex-start;
+    }
+
+    header #hamburger-menu {
+        margin-left: auto;
+        display: block;
     }
 }
