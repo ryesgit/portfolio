@@ -12,7 +12,7 @@ const Projects = () => {
       <motion.div
         initial={{scale: 0}}
         whileInView={{scale: 1}}
-        viewport={{ margin: "20%" }}
+        viewport={{ margin: "30%" }}
         >
         <div className="projects">
           {
