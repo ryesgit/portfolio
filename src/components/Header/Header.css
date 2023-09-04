@@ -39,6 +39,7 @@ header a {
 header a::after {
     content: "";
     position: absolute;
+    display: block;
     bottom: 0;
     height: 2px;
     transform: scale(0);
