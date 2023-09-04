@@ -1,6 +1,6 @@
-import { motion } from "framer-motion"
-import Logo from "../../../../components/ui/Logo/Logo"
-import "./Hero.css"
+import { motion } from "framer-motion";
+import "./Hero.css";
+import logo from "../../../../assets/logo.jpg";
 
 const Hero = ({ id } : { id?:string }) => {
   return (
@@ -13,11 +13,14 @@ const Hero = ({ id } : { id?:string }) => {
             stiffness: 260,
             damping: 20
             }}>
-            <Logo style={{
-            width: "10rem",
-            maxHeight: "10rem",
-            marginTop: "1rem"
-            }}/>
+
+            <img style={{
+                width: "200px",
+                borderRadius: "100%",
+                border: "5px solid indianred",
+                marginTop: "20px"
+            }}
+            src={logo} alt="Logo" />
             
             </motion.div>
 
