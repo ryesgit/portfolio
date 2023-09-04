@@ -20,6 +20,7 @@ header > h1 {
 header > nav > ul {
     margin: 0;
     padding: 0;
+    gap: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,11 +28,36 @@ header > nav > ul {
 
 header li {
     list-style-type: none;
-    margin-left: 1rem;
+    color: white;
+}
+
+header a {
+    text-decoration: none;
+    position:relative;
+}
+
+header a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    transform: scale(0);
+    width: 100%;
+    background: white;
+    transition: all 250ms ease-in-out;
+}
+
+header a:hover::after {
+    transform: scale(1);
+}
+
+header a:visited {
+    color: white;
+    text-decoration: none;
 }
 
 @media screen and (max-width: 500px) {
-    header > ul {
+    header > nav > ul {
         display: none;
     }
 }
