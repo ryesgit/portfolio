@@ -1,3 +1,4 @@
+import DarkModeSwitch from '../ui/DarkModeSwitch/index';
 import HamburgerMenu from '../ui/HamburgerMenu/index';
 import './Header.css';
 
@@ -21,8 +22,12 @@ const Header = () => {
           <a href="#education">
             <li>Education</li>
           </a>
+
+          <DarkModeSwitch />
+
         </ul>
       </HamburgerMenu>
+
       <nav>
         <ul>
           <a href="#hero">
@@ -37,6 +42,7 @@ const Header = () => {
           <a href="#education">
             <li>Education</li>
           </a>
+          <DarkModeSwitch />
         </ul>
       </nav>
       

@@ -1,0 +1,24 @@
+#switch {
+    position: relative;
+    display: inline-block;
+    border: 1px solid white;
+    border-radius: 1rem;
+    width:2rem;
+    height: 1rem;
+    appearance: none;
+}
+
+#switch::before {
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background: white;
+    border-radius: 100%;
+    left:0;
+    transition: all 250ms ease-in-out;
+}
+
+#switch:checked::before {
+    left: 50%;
+}
