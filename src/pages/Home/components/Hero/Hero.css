@@ -17,6 +17,18 @@ article > p {
     color: black;
 }
 
+.lightLink > a:visited {
+    color: black;
+}
+
 .lightLink svg {
     fill: black;
+}
+
+#link:not(.lightLink) p {
+    color: white;
+}
+
+#link:not(.lightLink) svg {
+    fill: white;
 }
