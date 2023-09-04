@@ -4,3 +4,8 @@ main {
     align-items: center;
     padding-top: 1rem;
 }
+
+.dark {
+    background: linear-gradient(45deg, rgb(17, 20, 22), rgb(23, 37, 48));
+    color: white;
+}
