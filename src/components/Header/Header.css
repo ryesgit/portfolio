@@ -17,6 +17,12 @@ header > h1 {
     letter-spacing: 1ch;
 }
 
+header > h1 > img {
+    width: 5rem;
+    border-radius: 100%;
+    border: 2px solid indianred;
+}
+
 header > nav > ul {
     margin: 0;
     padding: 0;

@@ -1,12 +1,15 @@
 import DarkModeSwitch from '../ui/DarkModeSwitch/index';
 import HamburgerMenu from '../ui/HamburgerMenu/index';
 import './Header.css';
+import logo from '../../assets/logo.jpg';
 
 const Header = () => {
   return (
     <header>
 
-      <h1>Lee</h1>
+      <h1>
+        <img src={logo} alt="Logo" />
+      </h1>
 
       <HamburgerMenu>
         <ul>
