@@ -32,7 +32,10 @@ function Home() {
           </main>
           <Dashes color="indianred" />
           <aside>
-            <footer style={{textAlign: "center"}}>
+            <footer style={{
+              textAlign: "center",
+              padding: "1rem 2rem",
+              }}>
             © Soliman, { new Date().getFullYear() }
             </footer>
           </aside>
