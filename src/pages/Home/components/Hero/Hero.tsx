@@ -19,14 +19,6 @@ const Hero = ({ id } : { id?:string }) => {
             stiffness: 260,
             damping: 20
             }}>
-
-            <img style={{
-                width: "200px",
-                borderRadius: "100%",
-                border: "5px solid indianred",
-                marginTop: "20px"
-            }}
-            src={logo} alt="Logo" />
             
             </motion.div>
 
@@ -35,6 +27,7 @@ const Hero = ({ id } : { id?:string }) => {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}>
 
+                <h1>Lee Ryan Soliman</h1>
                 <div className="links">
 
                     {
@@ -55,7 +48,6 @@ const Hero = ({ id } : { id?:string }) => {
                 </div>
 
                 <article>
-                <h1>Lee Ryan Soliman</h1>
                 <h2>Student, Developer, Problem Solver</h2>
                 <p>
                     Incoming Computer Engineering sophomore; <br />

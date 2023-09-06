@@ -1,5 +1,12 @@
 #hero {
     text-align: center;
+    padding: 2rem 0;
+}
+
+#hero .links, #hero h2 {
+    padding: 0;
+    margin: 0;
+    padding: 1rem 2rem;
 }
 
 article {
