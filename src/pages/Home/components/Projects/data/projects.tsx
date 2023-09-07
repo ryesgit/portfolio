@@ -1,9 +1,9 @@
 import { cb1, cb2, cb3, cb4, cb5 } from "./chugBlogsImages";
-import hpmg1 from "../assets/hpmg-1.jpg";
-import ccta1 from "../assets/ccta-1.jpg";
-import ccta2 from "../assets/ccta-2.jpg";
-import tv1 from "../assets/tv-1.jpg";
-import tv2 from "../assets/tv-2.jpg";
+import hpmg1 from "../assets/hpmg-1.webp";
+import ccta1 from "../assets/ccta-1.webp";
+import ccta2 from "../assets/ccta-2.webp";
+import tv1 from "../assets/tv-1.webp";
+import tv2 from "../assets/tv-2.webp";
 
 import { ReactNode } from "react";
 import { SiCss3, SiJavascript, SiMongodb, SiNodedotjs, SiPython, SiReact, SiTailwindcss, SiTypescript } from "react-icons/si";

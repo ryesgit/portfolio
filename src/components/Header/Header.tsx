@@ -1,7 +1,7 @@
 import DarkModeSwitch from '../ui/DarkModeSwitch/index';
 import HamburgerMenu from '../ui/HamburgerMenu/index';
 import './Header.css';
-import logo from '../../assets/logo.jpg';
+import logo from '../../assets/logo.webp';
 
 const Header = () => {
   return (
