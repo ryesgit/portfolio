@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import "./Hero.css";
-import logo from "../../../../assets/logo.jpg";
 import links from "./data/links";
 import { useContext } from "react";
 import DarkModeContext from "../../../../contexts/DarkModeProvider";
