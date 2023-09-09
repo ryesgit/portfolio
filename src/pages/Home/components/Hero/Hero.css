@@ -9,6 +9,16 @@
     padding: 1rem 2rem;
 }
 
+#hero .links {
+    display: flex;
+    font-size: .90rem;
+    gap: 2rem;
+}
+
+#hero > .links > svg {
+    size: .1rem;
+}
+
 article {
     padding: 1rem;
     border-radius: 1rem;
@@ -31,6 +41,7 @@ article > p {
 .lightLink svg {
     fill: black;
 }
+
 
 #link:not(.lightLink) p {
     color: white;
