@@ -1,5 +1,7 @@
-import { BsGithub, BsLinkedin } from "react-icons/bs";
+import { BsFiletypePdf, BsGithub, BsLinkedin } from "react-icons/bs";
 import { BiLogoGmail } from "react-icons/bi";
+import resume from "../../../../../assets/soliman-resume.pdf";
+
 interface link {
     platform: string;
     url: string;
@@ -21,6 +23,11 @@ const links: link[] = [
         platform: "Email",
         url: "mailto:2solimanleeryan@gmail.com",
         icon: <BiLogoGmail size="2rem" />
+    },
+    {
+        platform: "Resume",
+        url: resume,
+        icon: <BsFiletypePdf size="2rem" />
     }
 ]
 
