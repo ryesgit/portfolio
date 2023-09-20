@@ -4,6 +4,7 @@ import ccta1 from "../assets/ccta-1.webp";
 import ccta2 from "../assets/ccta-2.webp";
 import tv1 from "../assets/tv-1.webp";
 import tv2 from "../assets/tv-2.webp";
+import srd1 from "../assets/srd-1.webp";
 
 import { ReactNode } from "react";
 import { SiCss3, SiJavascript, SiMongodb, SiNodedotjs, SiPython, SiReact, SiTailwindcss, SiTypescript } from "react-icons/si";
@@ -44,6 +45,13 @@ const projects: project[] = [
         githubLink: "https://github.com/ryesgit/television",
         liveLink: "https://television.onrender.com/"
     },
+    {
+        name: "Set Relation Determinator",
+        technologiesUsed: [<SiReact />, <SiJavascript />, <SiCss3 />],
+        githubLink: "https://github.com/codenamerey/set-relation-determinator-tdd",
+        liveLink: "https://codenamerey.github.io/set-relation-determinator-tdd/",
+        projectImages: <img src={srd1} />
+    }
     ]
 
 export default projects;
