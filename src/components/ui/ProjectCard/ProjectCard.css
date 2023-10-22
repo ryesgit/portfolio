@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow: hidden;
     aspect-ratio: 1/1;
     width: 40%;
     color: white;
@@ -16,12 +15,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height: 100%;
+    width: 100%;
 }
 
 #project img {
     width: 100%;
-    height: 13rem;
+    height: 100%;
     object-fit: contain;
 }
 
@@ -43,20 +42,9 @@
     color: white;
 }
 
-
-@media screen and (min-width: 1400px) {
-    #project img{
-        height: 30rem;
-    }
-}
-
 @media screen and (max-width: 1100px) {
     #project {
         width: 50%;
-    }
-
-    #project img{
-        height: 10rem;
     }
 }
 
@@ -64,18 +52,10 @@
     #project {
         width: 60%;
     }
-
-    #project img{
-        height: 10rem;
-    }
 }
 
 @media screen and (max-width: 550px) {
     #project {
         width: 90%;
-    }
-
-    #project img{
-        height: 10rem;
     }
 }
