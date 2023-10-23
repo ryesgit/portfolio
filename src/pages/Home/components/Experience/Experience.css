@@ -5,6 +5,22 @@
 .experience {
     border-left: 2px dashed indianred;
     padding-left: 1rem;
+    position: relative;
+}
+
+.dates {
+    display: flex;
+    align-items: center;
+}
+
+.dates > #dashes {
+    flex-grow: 1;
+    height: 1px;
+    border: 1px solid indianred;
+}
+
+.dates > p {
+    padding: 0 1rem;
 }
 
 .experience > ul > li {
