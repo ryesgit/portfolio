@@ -35,11 +35,12 @@
 }
 
 .links > span > a {
+    color: white;
     text-decoration: none;
 }
 
 .links > span > a:visited {
-    color: white;
+    color: yellow;
 }
 
 @media screen and (max-width: 1400px) {
