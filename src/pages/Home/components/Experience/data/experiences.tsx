@@ -8,6 +8,13 @@ interface experience {
 
 const experiences: experience[] = [
     {
+        company: "Google Developer Student Clubs",
+        jobTitle: "Software Development Cadet",
+        startDate: "October 2023",
+        endDate: "Present",
+        description: []
+    },
+    {
         jobTitle: "Backend Developer",
         company: "Saphlink",
         startDate: "May 2023",
@@ -22,7 +29,7 @@ const experiences: experience[] = [
                     a list of emails and sends each a message using\
                     nodemailer, a Node.js module."
                     ]
-    }
+    },
 ];
 
 export default experiences;
