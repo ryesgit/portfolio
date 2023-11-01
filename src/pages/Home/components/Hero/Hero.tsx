@@ -49,7 +49,7 @@ const Hero = ({ id } : { id?:string }) => {
                 <article>
                 <h2>Student, Developer, Problem Solver</h2>
                 <p>
-                    Incoming Computer Engineering sophomore; <br />
+                    Computer Engineering sophomore; <br />
                     Helping clients with tech problems <br />
                     While building fun toy projects on the side
                 </p>
