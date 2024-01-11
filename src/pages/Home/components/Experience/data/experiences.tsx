@@ -16,7 +16,7 @@ const experiences: experience[] = [
     },
     {
         company: "Google Developer Student Clubs",
-        jobTitle: "Software Development Cadet",
+        jobTitle: "Software Development Subject Matter Expert (SME)",
         startDate: "October 2023",
         endDate: "Present",
         description: []
