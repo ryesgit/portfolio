@@ -10,9 +10,14 @@ import { ptmImages } from "./ptmImages";
 import { ReactNode } from "react";
 import {
 	SiCss3,
+	SiFirebase,
+	SiGraphql,
 	SiJavascript,
 	SiMongodb,
+	SiNextdotjs,
 	SiNodedotjs,
+	SiPostgresql,
+	SiPrisma,
 	SiPython,
 	SiReact,
 	SiTailwindcss,
@@ -74,7 +79,15 @@ const projects: project[] = [
 	},
 	{
 		name: "Pass The Message",
-		technologiesUsed: [<SiReact />, <SiJavascript />, <SiCss3 />],
+		technologiesUsed: [
+			<SiNextdotjs />,
+			<SiGraphql />,
+			<SiTailwindcss />,
+			<SiFirebase />,
+			<SiTypescript />,
+			<SiPrisma />,
+			<SiPostgresql />,
+		],
 		projectImages: <Slideshow images={ptmImages} />,
 		liveLink:
 			"https://drive.google.com/file/d/1IotI6KuTzlSoXA_CtzYX-ArA9JFiA1NA/view?usp=sharing",
