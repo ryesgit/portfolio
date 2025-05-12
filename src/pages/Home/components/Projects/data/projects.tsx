@@ -1,6 +1,7 @@
 import ccta1 from "../assets/ccta-1.webp";
 import ccta2 from "../assets/ccta-2.webp";
 import hpmg1 from "../assets/hpmg-1.webp";
+import mcp1 from "../assets/mcp-1.png";
 import srd1 from "../assets/srd-1.webp";
 import tv1 from "../assets/tv-1.webp";
 import tv2 from "../assets/tv-2.webp";
@@ -14,6 +15,7 @@ import {
   SiGraphql,
   SiJavascript,
   SiMongodb,
+  SiNestjs,
   SiNextdotjs,
   SiNodedotjs,
   SiPostgresql,
@@ -92,6 +94,14 @@ const projects: project[] = [
     projectImages: <Slideshow images={ptmImages} />,
     liveLink:
       "https://drive.google.com/file/d/1IotI6KuTzlSoXA_CtzYX-ArA9JFiA1NA/view?usp=sharing",
+  },
+  {
+    name: "Google Drive MCP",
+    technologiesUsed: [<SiNestjs />, <SiTypescript />],
+    projectImages: <Slideshow images={[mcp1]} />,
+    githubLink: "https://github.com/codenamerey/gdrive-mcp",
+    liveLink:
+      "https://drive.google.com/file/d/1zupYOjshDy65jBgMY4efLF0nPFn0wB7z/view?usp=sharing",
   },
 ];
 
