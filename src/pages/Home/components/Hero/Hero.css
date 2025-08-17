@@ -11,8 +11,11 @@
 
 #hero .links {
     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     font-size: .90rem;
-    gap: 2rem;
+    gap: 1rem;
+    margin: 2rem 0;
 }
 
 #hero > .links > svg {
@@ -30,23 +33,123 @@ article > p {
     font-size: 1.2rem;
 }
 
-.lightLink p{
-    color: black;
+#link {
+    background: var(--gradient-surface);
+    border: 1px solid var(--color-border-dark);
+    border-radius: 1rem;
+    padding: 1rem 1.5rem;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    min-width: 120px;
 }
 
-.lightLink > a:visited {
-    color: black;
+#link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.1), transparent);
+    transition: left 0.5s ease;
 }
 
-.lightLink svg {
-    fill: black;
+#link:hover::before {
+    left: 100%;
 }
 
-
-#link:not(.lightLink) p {
-    color: white;
+#link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border-color: var(--color-accent-cyan);
 }
 
-#link:not(.lightLink) svg {
-    fill: white;
+#link a {
+    text-decoration: none;
+    color: var(--color-text-primary-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+#link a:visited {
+    color: var(--color-text-primary-dark);
+}
+
+#link svg {
+    fill: var(--color-accent-cyan);
+    transition: all 0.3s ease;
+}
+
+#link:hover svg {
+    fill: var(--color-primary-300);
+    transform: scale(1.1);
+}
+
+#link p {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-secondary-dark);
+}
+
+#link:hover p {
+    color: var(--color-text-primary-dark);
+}
+
+/* Light theme overrides - Match project cards */
+#link.lightLink {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+    border: 1px solid var(--color-neutral-200) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.4s ease;
+}
+
+#link.lightLink::before {
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.05), transparent) !important;
+}
+
+#link.lightLink:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+    border-color: var(--color-neutral-400) !important;
+    background: var(--color-neutral-600) !important;
+}
+
+#link.lightLink a {
+    color: var(--color-neutral-800) !important;
+}
+
+#link.lightLink a:visited {
+    color: var(--color-neutral-800) !important;
+}
+
+#link.lightLink svg {
+    fill: var(--color-neutral-600) !important;
+}
+
+#link.lightLink:hover svg {
+    fill: white !important;
+}
+
+#link.lightLink p {
+    color: var(--color-neutral-600) !important;
+}
+
+#link.lightLink:hover p {
+    color: white !important;
+}
+
+@media (max-width: 768px) {
+    #hero .links {
+        gap: 0.75rem;
+    }
+    
+    #link {
+        min-width: 100px;
+        padding: 0.75rem 1rem;
+    }
 }

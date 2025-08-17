@@ -21,7 +21,7 @@ function Home() {
 
   return (
     <>
-      <div className={`${ dark ? "dark" : "" }`}>
+      <div className={`${ dark ? "dark" : "light" }`}>
         <Header />
         <Container>
           <main id="main-content">

@@ -1,0 +1,106 @@
+/* Enhanced Color System - Red/Dark Motif */
+:root {
+  /* Primary Brand Colors */
+  --color-primary-50: #fef2f2;   /* Lightest red tint */
+  --color-primary-100: #fee2e2;  /* Very light red */
+  --color-primary-200: #fecaca;  /* Light red */
+  --color-primary-300: #fca5a5;  /* Medium light red */
+  --color-primary-400: #f87171;  /* Medium red */
+  --color-primary-500: #ef4444;  /* Base red */
+  --color-primary-600: #dc2626;  /* Dark red */
+  --color-primary-700: #b91c1c;  /* Darker red */
+  --color-primary-800: #991b1b;  /* Very dark red */
+  --color-primary-900: #7f1d1d;  /* Darkest red */
+
+  /* Accent Colors (Complementary to red) */
+  --color-accent-cyan: #06b6d4;    /* Cyan accent */
+  --color-accent-emerald: #10b981; /* Emerald accent */
+  --color-accent-amber: #f59e0b;   /* Amber accent */
+  --color-accent-purple: #8b5cf6;  /* Purple accent */
+
+  /* Neutral Colors */
+  --color-neutral-50: #fafafa;   /* Almost white */
+  --color-neutral-100: #f5f5f5;  /* Very light gray */
+  --color-neutral-200: #e5e5e5;  /* Light gray */
+  --color-neutral-300: #d4d4d4;  /* Medium light gray */
+  --color-neutral-400: #a3a3a3;  /* Medium gray */
+  --color-neutral-500: #737373;  /* Base gray */
+  --color-neutral-600: #525252;  /* Dark gray */
+  --color-neutral-700: #404040;  /* Darker gray */
+  --color-neutral-800: #262626;  /* Very dark gray */
+  --color-neutral-900: #171717;  /* Almost black */
+
+  /* Dark Theme Specific */
+  --color-dark-bg-primary: #0f0f0f;     /* Main dark background */
+  --color-dark-bg-secondary: #1a1a1a;   /* Secondary dark background */
+  --color-dark-bg-tertiary: #262626;    /* Tertiary dark background */
+  --color-dark-surface: #2d2d2d;        /* Card/surface background */
+  
+  /* Enhanced Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-primary-800) 100%);
+  --gradient-dark: linear-gradient(135deg, var(--color-dark-bg-primary) 0%, var(--color-dark-bg-secondary) 50%, var(--color-primary-900) 100%);
+  --gradient-surface: linear-gradient(135deg, var(--color-dark-surface) 0%, var(--color-primary-900) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-accent-cyan) 100%);
+
+  /* Semantic Colors */
+  --color-success: var(--color-accent-emerald);
+  --color-warning: var(--color-accent-amber);
+  --color-error: var(--color-primary-500);
+  --color-info: var(--color-accent-cyan);
+
+  /* Text Colors for Accessibility */
+  --color-text-primary-light: var(--color-neutral-900);
+  --color-text-secondary-light: var(--color-neutral-600);
+  --color-text-primary-dark: var(--color-neutral-50);
+  --color-text-secondary-dark: var(--color-neutral-300);
+
+  /* Interactive States */
+  --color-hover-light: var(--color-primary-50);
+  --color-hover-dark: var(--color-primary-800);
+  --color-active-light: var(--color-primary-100);
+  --color-active-dark: var(--color-primary-700);
+  --color-focus: var(--color-accent-cyan);
+
+  /* Borders */
+  --color-border-light: var(--color-neutral-200);
+  --color-border-dark: var(--color-neutral-700);
+  --color-border-accent: var(--color-primary-500);
+}
+
+/* Light Theme Variables - Warm off-white */
+.light {
+  --bg-primary: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #f1f3f4 100%);
+  --bg-secondary: #f8f9fa;
+  --bg-surface: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  --text-primary: var(--color-neutral-800);
+  --text-secondary: var(--color-neutral-600);
+  --border-color: var(--color-neutral-300);
+  --hover-color: var(--color-neutral-200);
+  --active-color: var(--color-neutral-300);
+}
+
+/* Dark Theme Variables */
+.dark {
+  --bg-primary: var(--gradient-dark);
+  --bg-secondary: var(--color-dark-bg-secondary);
+  --bg-surface: var(--gradient-surface);
+  --text-primary: var(--color-text-primary-dark);
+  --text-secondary: var(--color-text-secondary-dark);
+  --border-color: var(--color-border-dark);
+  --hover-color: var(--color-hover-dark);
+  --active-color: var(--color-active-dark);
+}
+
+/* Utility Classes */
+.text-accent { color: var(--color-accent-cyan); }
+.text-primary { color: var(--color-primary-500); }
+.text-success { color: var(--color-success); }
+.text-warning { color: var(--color-warning); }
+.text-error { color: var(--color-error); }
+
+.bg-gradient-primary { background: var(--gradient-primary); }
+.bg-gradient-surface { background: var(--gradient-surface); }
+.bg-gradient-accent { background: var(--gradient-accent); }
+
+.border-accent { border-color: var(--color-border-accent); }
+.border-primary { border-color: var(--color-primary-500); }

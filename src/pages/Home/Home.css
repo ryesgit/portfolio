@@ -6,8 +6,17 @@ main {
 }
 
 .dark {
-    background: linear-gradient(45deg, rgb(17, 20, 22), rgb(23, 37, 48));
-    color: white;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    transition: all 0.3s ease;
+}
+
+.light {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    transition: all 0.3s ease;
 }
 
 .section-loader {

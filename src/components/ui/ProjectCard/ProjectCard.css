@@ -4,11 +4,34 @@
     justify-content: center;
     aspect-ratio: 1/1;
     width: 40%;
-    color: white;
-    padding: 1rem;
-    background-color: rgb(39, 3, 3);
-    border-radius: 1rem .5rem;
+    color: var(--color-text-primary-dark);
+    padding: 1.5rem;
+    background: var(--gradient-surface);
+    border-radius: 1rem;
     text-align: center;
+    border: 1px solid var(--color-border-dark);
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+#project:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: var(--color-accent-cyan);
+}
+
+/* Light mode project cards */
+.light #project {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 1px solid var(--color-neutral-200);
+    color: var(--color-neutral-800);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s ease;
+}
+
+.light #project:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: var(--color-neutral-400);
 }
 
 #project > section {
@@ -35,12 +58,43 @@
 }
 
 .links > span > a {
-    color: white;
+    color: var(--color-accent-cyan);
     text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-accent-cyan);
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.links > span > a:hover {
+    background-color: var(--color-accent-cyan);
+    color: var(--color-dark-bg-primary);
+    transform: translateY(-1px);
 }
 
 .links > span > a:visited {
-    color: yellow;
+    color: var(--color-accent-cyan);
+}
+
+.links > span > a:focus {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+/* Light mode project links */
+.light .links > span > a {
+    color: var(--color-neutral-700);
+    border-color: var(--color-neutral-400);
+}
+
+.light .links > span > a:hover {
+    background-color: var(--color-neutral-600);
+    color: white;
+}
+
+.light .links > span > a:visited {
+    color: var(--color-neutral-700);
 }
 
 @media screen and (max-width: 1400px) {

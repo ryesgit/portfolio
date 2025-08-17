@@ -1,12 +1,13 @@
 header {
-    /* background-color: rgb(122, 12, 12); */
-    background: linear-gradient(45deg, rgb(129, 11, 11), rgb(39, 3, 3));
-    color: white;
+    background: var(--gradient-primary);
+    color: var(--color-text-primary-dark);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     padding: .5rem 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 header > h1 {
@@ -21,7 +22,13 @@ header > h1 {
 header > h1 > img {
     width: 5rem;
     border-radius: 100%;
-    border: 2px solid indianred;
+    border: 2px solid var(--color-accent-cyan);
+    transition: all 0.3s ease;
+}
+
+header > h1 > img:hover {
+    border-color: var(--color-primary-300);
+    transform: scale(1.05);
 }
 
 header > nav > ul {
@@ -35,12 +42,16 @@ header > nav > ul {
 
 header li {
     list-style-type: none;
-    color: white;
+    color: var(--color-text-primary-dark);
 }
 
 header a {
     text-decoration: none;
-    position:relative;
+    position: relative;
+    color: var(--color-text-primary-dark);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
 }
 
 header a::after {
@@ -51,8 +62,13 @@ header a::after {
     height: 2px;
     transform: scale(0);
     width: 100%;
-    background: white;
+    background: var(--color-accent-cyan);
     transition: all 250ms ease-in-out;
+}
+
+header a:hover {
+    background-color: var(--color-hover-dark);
+    color: var(--color-accent-cyan);
 }
 
 header a:hover::after {
@@ -60,8 +76,13 @@ header a:hover::after {
 }
 
 header a:visited {
-    color: white;
+    color: var(--color-text-primary-dark);
     text-decoration: none;
+}
+
+header a:focus {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
 }
 
 #hero article {
