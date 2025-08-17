@@ -10,10 +10,16 @@ const DarkModeSwitch = () => {
 
     return (
         <div>
-            <BsSun />
-            <input type="checkbox" name="switch" id="switch" defaultChecked={dark}
-            onClick={() => setDark!( !dark )} />
-            <BsMoon />
+            <BsSun aria-hidden="true" />
+            <input 
+                type="checkbox" 
+                name="switch" 
+                id="switch" 
+                checked={dark}
+                onChange={() => setDark && setDark(!dark)}
+                aria-label={`Switch to ${dark ? 'light' : 'dark'} mode`}
+            />
+            <BsMoon aria-hidden="true" />
         </div>
     )
 }
