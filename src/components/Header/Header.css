@@ -12,8 +12,8 @@ header {
     top: 0;
     left: 0;
     right: 0;
-    width: 100%;
     z-index: 1000;
+    box-sizing: border-box;
 }
 
 header > h1 {
@@ -108,14 +108,23 @@ header #hamburger-menu {
     header {
         flex-direction: row;
         justify-content: space-between;
+        padding: .5rem 1rem;
     }
 
     header h1 {
         justify-content: flex-start;
+        flex: 1;
     }
 
     header #hamburger-menu {
+        display: flex;
         margin-left: auto;
-        display: block;
+        margin-right: 0;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        padding: 0.25rem;
+        box-sizing: border-box;
+        max-width: 40px;
     }
 }
