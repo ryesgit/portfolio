@@ -9,3 +9,12 @@ main {
     background: linear-gradient(45deg, rgb(17, 20, 22), rgb(23, 37, 48));
     color: white;
 }
+
+.section-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    color: var(--color-primary);
+    font-size: 1.2rem;
+}

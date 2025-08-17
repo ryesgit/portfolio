@@ -1,14 +1,15 @@
 // import './outline.css';
 
-import { useContext } from "react"
+import { useContext, lazy, Suspense } from "react"
 import Container from "../../components/Container/index"
 import Header from "../../components/Header/Header"
 import Dashes from "../../components/ui/Dashes"
 import "./Home.css"
-import Education from "./components/Education/index"
-import Experience from "./components/Experience/index"
 import Hero from "./components/Hero/Hero"
-import Projects from "./components/Projects/index"
+
+const Projects = lazy(() => import("./components/Projects/index"))
+const Experience = lazy(() => import("./components/Experience/index"))
+const Education = lazy(() => import("./components/Education/index"))
 import DarkModeContext from "../../contexts/DarkModeProvider"
 
 function Home() {
@@ -20,15 +21,21 @@ function Home() {
       <div className={`${ dark ? "dark" : "" }`}>
         <Header />
         <Container>
-          <main>
+          <main id="main-content">
             <Dashes color="indianred" />
             <Hero id="hero" />
             <Dashes color="indianred" />
-            <Projects />
+            <Suspense fallback={<div className="section-loader">Loading...</div>}>
+              <Projects />
+            </Suspense>
             <Dashes color="indianred" />
-            <Experience />
+            <Suspense fallback={<div className="section-loader">Loading...</div>}>
+              <Experience />
+            </Suspense>
             <Dashes color="indianred" />
-            <Education />
+            <Suspense fallback={<div className="section-loader">Loading...</div>}>
+              <Education />
+            </Suspense>
           </main>
           <Dashes color="indianred" />
           <aside>
