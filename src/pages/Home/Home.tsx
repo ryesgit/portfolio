@@ -9,6 +9,7 @@ import Hero from "./components/Hero/Hero"
 import ProjectsSkeleton from "../../components/ui/SkeletonLoader/ProjectsSkeleton"
 import ExperienceSkeleton from "../../components/ui/SkeletonLoader/ExperienceSkeleton"
 import EducationSkeleton from "../../components/ui/SkeletonLoader/EducationSkeleton"
+import ChatBot from "../../components/AIChat/ChatBot"
 
 const Projects = lazy(() => import("./components/Projects/index"))
 const Experience = lazy(() => import("./components/Experience/index"))
@@ -50,6 +51,7 @@ function Home() {
             </footer>
           </aside>
         </Container>
+        <ChatBot />
       </div>
     </>
   )
