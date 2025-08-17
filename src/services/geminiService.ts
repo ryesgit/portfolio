@@ -1,10 +1,10 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import portfolioKnowledge from '../data/portfolioKnowledge';
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import portfolioKnowledge from "../data/portfolioKnowledge";
 
 // Initialize Gemini AI with free model
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || '');
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || "");
 
-const model = genAI.getGenerativeModel({ 
+const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash", // Free tier model
   generationConfig: {
     temperature: 0.7,
@@ -26,6 +26,12 @@ IMPORTANT INSTRUCTIONS:
 - If asked about availability, mention he's open to opportunities
 - Keep responses concise but informative
 - If you don't know something specific about Lee, admit it and suggest they contact him directly
+- Use Markdown formatting to make responses more readable:
+  * Use **bold** for emphasis and important points
+  * Use bullet points for lists
+  * Use \`code\` formatting for technical terms and technologies
+  * Use proper headings when organizing information
+  * Include links where relevant
 
 Here's what you know about Lee Ryan Soliman:
 
@@ -35,7 +41,7 @@ Remember: You represent Lee professionally, so maintain a positive, competent, a
 `;
 
 export interface ChatMessage {
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
   timestamp: Date;
 }
@@ -47,16 +53,19 @@ export class GeminiChatService {
     try {
       // Add user message to history
       this.chatHistory.push({
-        role: 'user',
+        role: "user",
         content: userMessage,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
 
       // Prepare the full prompt with context
       const fullPrompt = `${systemPrompt}
 
 Previous conversation:
-${this.chatHistory.slice(-6).map(msg => `${msg.role}: ${msg.content}`).join('\n')}
+${this.chatHistory
+  .slice(-6)
+  .map((msg) => `${msg.role}: ${msg.content}`)
+  .join("\n")}
 
 User: ${userMessage}
 Assistant:`;
@@ -68,22 +77,23 @@ Assistant:`;
 
       // Add assistant response to history
       this.chatHistory.push({
-        role: 'assistant',
+        role: "assistant",
         content: assistantMessage,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
 
       return assistantMessage;
     } catch (error) {
-      console.error('Error calling Gemini API:', error);
-      
+      console.error("Error calling Gemini API:", error);
+
       // Fallback response
-      const fallbackMessage = "I'm sorry, I'm having trouble connecting right now. Please feel free to contact Lee directly at 2solimanleeryan@gmail.com or check out his projects on GitHub at https://github.com/codenamerey";
-      
+      const fallbackMessage =
+        "I'm sorry, I'm having trouble connecting right now. Please feel free to contact Lee directly at 2solimanleeryan@gmail.com or check out his projects on GitHub at https://github.com/codenamerey";
+
       this.chatHistory.push({
-        role: 'assistant',
+        role: "assistant",
         content: fallbackMessage,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
 
       return fallbackMessage;

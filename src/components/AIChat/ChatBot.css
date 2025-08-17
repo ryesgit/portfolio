@@ -88,6 +88,9 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Import code highlighting styles */
+@import 'highlight.js/styles/github-dark.css';
+
 /* Chat Messages */
 .chat-messages {
   flex: 1;
@@ -148,6 +151,69 @@
 
 .light .message-time {
   color: var(--color-text-secondary-light);
+}
+
+/* Markdown Styling in Messages */
+.message-content h1,
+.message-content h2,
+.message-content h3,
+.message-content h4,
+.message-content h5,
+.message-content h6 {
+  margin: 0.5em 0 0.3em 0;
+  font-weight: 600;
+}
+
+.message-content h1 { font-size: 1.1em; }
+.message-content h2 { font-size: 1.05em; }
+.message-content h3 { font-size: 1em; }
+
+.message-content blockquote {
+  border-left: 3px solid var(--color-accent-cyan);
+  padding-left: 0.8em;
+  margin: 0.5em 0;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.message-content pre {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 0.8em;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 0.5em 0;
+}
+
+.message-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.5em 0;
+}
+
+.message-content th,
+.message-content td {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.3em 0.6em;
+  text-align: left;
+}
+
+.message-content th {
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+}
+
+/* Light mode markdown adjustments */
+.light .message-content pre {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.light .message-content th,
+.light .message-content td {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.light .message-content th {
+  background: rgba(0, 0, 0, 0.05);
 }
 
 /* Typing Indicator */

@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BsChatDots, BsX, BsSend, BsRobot } from 'react-icons/bs';
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from 'rehype-highlight';
 import { geminiChat, ChatMessage } from '../../services/geminiService';
 import './ChatBot.css';
 
@@ -122,7 +124,58 @@ const ChatBot = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <div className="message-content">
-                    {message.content}
+                    {message.role === 'assistant' ? (
+                      <ReactMarkdown 
+                        rehypePlugins={[rehypeHighlight]}
+                        components={{
+                          p: ({children}) => <p style={{margin: '0.5em 0'}}>{children}</p>,
+                          ul: ({children}) => <ul style={{margin: '0.5em 0', paddingLeft: '1.2em'}}>{children}</ul>,
+                          ol: ({children}) => <ol style={{margin: '0.5em 0', paddingLeft: '1.2em'}}>{children}</ol>,
+                          li: ({children}) => <li style={{margin: '0.2em 0'}}>{children}</li>,
+                          strong: ({children}) => <strong style={{fontWeight: '600'}}>{children}</strong>,
+                          em: ({children}) => <em style={{fontStyle: 'italic'}}>{children}</em>,
+                          code: ({children, className}) => {
+                            const isInline = !className;
+                            return isInline ? (
+                              <code style={{
+                                background: 'rgba(255, 255, 255, 0.1)',
+                                padding: '0.1em 0.3em',
+                                borderRadius: '3px',
+                                fontSize: '0.85em',
+                                fontFamily: 'monospace'
+                              }}>{children}</code>
+                            ) : (
+                              <code className={className} style={{
+                                display: 'block',
+                                background: 'rgba(0, 0, 0, 0.1)',
+                                padding: '0.5em',
+                                borderRadius: '4px',
+                                fontSize: '0.85em',
+                                fontFamily: 'monospace',
+                                overflow: 'auto'
+                              }}>{children}</code>
+                            );
+                          },
+                          a: ({children, href}) => (
+                            <a 
+                              href={href} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              style={{
+                                color: 'var(--color-accent-cyan)',
+                                textDecoration: 'underline'
+                              }}
+                            >
+                              {children}
+                            </a>
+                          )
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
+                    ) : (
+                      message.content
+                    )}
                   </div>
                   <div className="message-time">
                     {message.timestamp.toLocaleTimeString([], { 
