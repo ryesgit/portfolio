@@ -8,22 +8,22 @@ const Header = () => {
     <header>
 
       <h1>
-        <img src={logo} alt="Logo" />
+        <img src={logo} alt="Lee Ryan Soliman Portfolio Logo" />
       </h1>
 
       <HamburgerMenu>
         <ul>
           <li>
-            <a href="#hero">Home</a>
+            <a href="#hero" aria-label="Navigate to home section">Home</a>
           </li>
           <li>
-            <a href="#projects">Projects</a>
+            <a href="#projects" aria-label="Navigate to projects section">Projects</a>
           </li>
           <li>
-            <a href="#experience">Experience</a>
+            <a href="#experience" aria-label="Navigate to experience section">Experience</a>
           </li>
           <li>
-            <a href="#education">Education</a>
+            <a href="#education" aria-label="Navigate to education section">Education</a>
           </li>
 
           <DarkModeSwitch />
@@ -31,19 +31,19 @@ const Header = () => {
         </ul>
       </HamburgerMenu>
 
-      <nav>
+      <nav aria-label="Main navigation">
         <ul>
           <li>
-            <a href="#hero">Home</a>
+            <a href="#hero" aria-label="Navigate to home section">Home</a>
           </li>
           <li>
-            <a href="#projects">Projects</a>
+            <a href="#projects" aria-label="Navigate to projects section">Projects</a>
           </li>
           <li>
-            <a href="#experience">Experience</a>
+            <a href="#experience" aria-label="Navigate to experience section">Experience</a>
           </li>
           <li>
-            <a href="#education">Education</a>
+            <a href="#education" aria-label="Navigate to education section">Education</a>
           </li>
           <DarkModeSwitch />
         </ul>
