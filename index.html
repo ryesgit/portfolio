@@ -22,11 +22,76 @@
       .skip-link:focus {
         top: 0;
       }
+
+      .initial-skeleton {
+        background: linear-gradient(45deg, rgb(17, 20, 22), rgb(23, 37, 48));
+        min-height: 100vh;
+        padding: 1rem;
+      }
+
+      .skeleton-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .skeleton-logo {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+        background-size: 200% 100%;
+        animation: skeleton-shimmer 1.5s infinite;
+        border-radius: 8px;
+      }
+
+      .skeleton-nav {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .skeleton-nav-item {
+        width: 80px;
+        height: 20px;
+        background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+        background-size: 200% 100%;
+        animation: skeleton-shimmer 1.5s infinite;
+        border-radius: 4px;
+      }
+
+      @keyframes skeleton-shimmer {
+        0% {
+          background-position: -200% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .skeleton-nav {
+          display: none;
+        }
+      }
     </style>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <div id="root"></div>
+    <div id="root">
+      <div class="initial-skeleton">
+        <header class="skeleton-header">
+          <div class="skeleton-logo"></div>
+          <nav class="skeleton-nav">
+            <div class="skeleton-nav-item"></div>
+            <div class="skeleton-nav-item"></div>
+            <div class="skeleton-nav-item"></div>
+            <div class="skeleton-nav-item"></div>
+          </nav>
+        </header>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

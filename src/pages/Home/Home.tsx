@@ -6,6 +6,9 @@ import Header from "../../components/Header/Header"
 import Dashes from "../../components/ui/Dashes"
 import "./Home.css"
 import Hero from "./components/Hero/Hero"
+import ProjectsSkeleton from "../../components/ui/SkeletonLoader/ProjectsSkeleton"
+import ExperienceSkeleton from "../../components/ui/SkeletonLoader/ExperienceSkeleton"
+import EducationSkeleton from "../../components/ui/SkeletonLoader/EducationSkeleton"
 
 const Projects = lazy(() => import("./components/Projects/index"))
 const Experience = lazy(() => import("./components/Experience/index"))
@@ -25,15 +28,15 @@ function Home() {
             <Dashes color="indianred" />
             <Hero id="hero" />
             <Dashes color="indianred" />
-            <Suspense fallback={<div className="section-loader">Loading...</div>}>
+            <Suspense fallback={<ProjectsSkeleton />}>
               <Projects />
             </Suspense>
             <Dashes color="indianred" />
-            <Suspense fallback={<div className="section-loader">Loading...</div>}>
+            <Suspense fallback={<ExperienceSkeleton />}>
               <Experience />
             </Suspense>
             <Dashes color="indianred" />
-            <Suspense fallback={<div className="section-loader">Loading...</div>}>
+            <Suspense fallback={<EducationSkeleton />}>
               <Education />
             </Suspense>
           </main>
