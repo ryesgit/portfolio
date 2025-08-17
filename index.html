@@ -22,63 +22,11 @@
       .skip-link:focus {
         top: 0;
       }
-      .lds-hourglass {
-        display: inline-block;
-        position: relative;
-        width: 80px;
-        height: 80px;
-      }
-      .lds-hourglass:after {
-        background: rgb(185, 189, 194);
-        content: " ";
-        display: block;
-        border-radius: 50%;
-        width: 0;
-        height: 0;
-        margin: 8px;
-        box-sizing: border-box;
-        border: 32px solid #fff;
-        border-color: #0d430d transparent #0d430d transparent;
-        animation: lds-hourglass 1.2s infinite;
-      }
-      @keyframes lds-hourglass {
-        0% {
-          transform: rotate(0);
-          animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-        }
-        50% {
-          transform: rotate(900deg);
-          animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-        }
-        100% {
-          transform: rotate(1800deg);
-        }
-      }
-
-      .lds-wrapper {
-        background: linear-gradient(45deg, rgb(17, 20, 22), rgb(23, 37, 48));
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        inset: 0;
-        position: absolute;
-      }
-
-      .lds-title {
-        font-family: sans-serif;
-        color: #008000;
-      }
     </style>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <div id="root">
-      <div class="lds-wrapper">
-        <div class="lds-hourglass"></div>
-        <p class="lds-title">Content is loading, please wait.</p>
-      </div>
-    </div>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
