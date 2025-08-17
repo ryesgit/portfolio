@@ -13,18 +13,18 @@ const Header = () => {
 
       <HamburgerMenu>
         <ul>
-          <a href="#hero">
-            <li>Home</li>
-          </a>
-          <a href="#projects">
-            <li>Projects</li>
-          </a>
-          <a href="#experience">
-            <li>Experience</li>
-          </a>
-          <a href="#education">
-            <li>Education</li>
-          </a>
+          <li>
+            <a href="#hero">Home</a>
+          </li>
+          <li>
+            <a href="#projects">Projects</a>
+          </li>
+          <li>
+            <a href="#experience">Experience</a>
+          </li>
+          <li>
+            <a href="#education">Education</a>
+          </li>
 
           <DarkModeSwitch />
 
@@ -33,18 +33,18 @@ const Header = () => {
 
       <nav>
         <ul>
-          <a href="#hero">
-            <li>Home</li>
-          </a>
-          <a href="#projects">
-            <li>Projects</li>
-          </a>
-          <a href="#experience">
-            <li>Experience</li>
-          </a>
-          <a href="#education">
-            <li>Education</li>
-          </a>
+          <li>
+            <a href="#hero">Home</a>
+          </li>
+          <li>
+            <a href="#projects">Projects</a>
+          </li>
+          <li>
+            <a href="#experience">Experience</a>
+          </li>
+          <li>
+            <a href="#education">Education</a>
+          </li>
           <DarkModeSwitch />
         </ul>
       </nav>
