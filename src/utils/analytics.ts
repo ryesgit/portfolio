@@ -1,5 +1,3 @@
-import { gtag } from 'gtag';
-
 declare global {
   interface Window {
     gtag: (
