@@ -11,27 +11,29 @@ Lee Ryan Soliman is a Computer Engineering student at Polytechnic University of 
 - Resume: Available for download on the website
 
 ### Technical Skills
-- **Frontend**: React, TypeScript, JavaScript, CSS3, HTML5, Tailwind CSS
-- **Backend**: Node.js, NestJS, Express.js, Python
-- **Databases**: MongoDB, PostgreSQL, Firebase
-- **Tools & Frameworks**: Next.js, Prisma, GraphQL
-- **Languages**: TypeScript, JavaScript, Python
-- **Methodologies**: Agile, CQRS design pattern, SOLID principles
-- **APIs**: Google Calendar API, Microsoft Outlook Calendar API
+- **Frontend**: React, JavaScript, TypeScript, Tailwind CSS, ShadCN/UI
+- **Backend**: Node.js, Express, NestJS, MongoDB, REST API, GraphQL
+- **Languages**: JavaScript, TypeScript, Python
+- **Tools**: Git, GitHub, Vite.js, ESLint, Prettier, Postman, Docker, Puppeteer
+- **Database**: MongoDB, PostgreSQL, Prisma
+- **Others**: SOLID principles, Agile methodology, Test-driven development, Model Context Protocol (MCP)
 
 ### Projects
 
 #### 1. Chug Blogs
-- **Technologies**: TypeScript, Node.js, MongoDB, Tailwind CSS
-- **Description**: A blog platform application
-- **GitHub**: https://github.com/codenamerey/chug-blogs-client
+- **Technologies**: React, MongoDB, Express
+- **Description**: Designed and built a full-stack content management system with React frontend and Express backend
+- **GitHub Client**: https://github.com/codenamerey/chug-blogs-client
+- **GitHub Server**: https://github.com/codenamerey/chug-blogs-server
+- **Features**: Implemented RESTful API architecture for blog post creation and management, added user authentication and role-based access control, utilized MongoDB for data persistence and Tailwind CSS for responsive UI design
 - **Type**: Full-stack web application
 
 #### 2. Harry Potter Memory Game
-- **Technologies**: React, JavaScript, CSS3
-- **Description**: An interactive memory card game with Harry Potter theme
+- **Technologies**: React
+- **Description**: Built an interactive card game using React and React Hooks
 - **GitHub**: https://github.com/codenamerey/memory-card
 - **Live Demo**: https://codenamerey.github.io/memory-card/
+- **Features**: Implemented state management to track card selections and game progress, designed responsive UI with CSS animations for card flipping effects, applied test-driven development principles during development
 - **Type**: Frontend game application
 
 #### 3. Covid-19 Contact-Tracing Application
@@ -48,10 +50,11 @@ Lee Ryan Soliman is a Computer Engineering student at Polytechnic University of 
 - **Type**: Full-stack application
 
 #### 5. Set Relation Determinator
-- **Technologies**: React, JavaScript, CSS3
-- **Description**: A mathematical tool for determining set relations with TDD approach
+- **Technologies**: React, JavaScript
+- **Description**: Developed a mathematical tool for determining relationships between sets
 - **GitHub**: https://github.com/codenamerey/set-relation-determinator-tdd
 - **Live Demo**: https://codenamerey.github.io/set-relation-determinator-tdd/
+- **Features**: Utilized test-driven development (TDD) approach for robust functionality, implemented clean, maintainable code with modular component architecture
 - **Type**: Educational web tool
 
 #### 6. Pass The Message
@@ -61,8 +64,10 @@ Lee Ryan Soliman is a Computer Engineering student at Polytechnic University of 
 - **Type**: Full-stack messaging platform
 
 #### 7. Google Drive MCP
-- **Technologies**: NestJS, TypeScript
-- **Description**: A Google Drive integration using MCP (Model Context Protocol)
+- **Technologies**: TypeScript, NestJS
+- **Description**: Created a utility tool for Google Drive file management using MCP. A tool integratable to AI agents like Claude
+- **GitHub**: https://github.com/codenamerey/google-drive-mcp
+- **Features**: Built backend with NestJS for handling file operations, wrote authorization server for retrieval of google tokens
 - **Type**: Backend integration service
 
 ### Professional Summary
@@ -79,17 +84,16 @@ Lee is a dedicated software problem solver with professional experience in full-
 ### Professional Experience
 
 #### Current Position: Software Engineer at OM.FARM (January 2024 - Present)
-- Works closely with senior developers and team members to develop frontend and backend services for a livestock leasing platform
-- Uses NestJS for backend development and builds GraphQL APIs
-- Applies CQRS design pattern and best practices for writing clean code
-- Strong understanding of SOLID principles
-- Works in Agile methodology, participating in daily standups, sprint planning, and retrospectives
-- Contributes to both frontend and backend development for production systems
+- Works closely with senior developers to build frontend and backend services for a livestock leasing platform
+- Develops GraphQL API using NestJS for backend services
+- Implements best practices for writing clean code following SOLID principles
+- Participates in Agile development process through daily standups, sprint planning, and retrospectives
 
-#### Software Development Subject Matter Expert (SME) at Google Developer Student Clubs (October 2023 - Present)
-- Serves as technical expert in software development
-- Part of Google's developer community program
-- Provides guidance and mentorship to fellow developers
+#### Software Development Subject Matter Expert (SME) at Google Developer Student Clubs (October 2023 - October 2024)
+- Collaborated with team members on web development projects using modern JavaScript frameworks
+- Participated in coding workshops and hackathons to enhance technical skills
+- Applied agile methodologies and test-driven development practices
+- Supported peers in learning new web development concepts and technologies
 
 ### Education
 **Polytechnic University of the Philippines**
