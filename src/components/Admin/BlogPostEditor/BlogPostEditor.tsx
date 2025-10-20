@@ -1,7 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeRaw from 'rehype-raw';
 import { BlogPost } from '../../../data/blogPosts';
 import { createBlogPost, updateBlogPost } from '../../../services/blogService';
+import { uploadBlogImage, generateImageMarkdown } from '../../../services/storageService';
+import ImageUpload from '../ImageUpload/ImageUpload';
 import './BlogPostEditor.css';
+import 'highlight.js/styles/github-dark.css';
 
 interface BlogPostEditorProps {
   post?: BlogPost | null;
@@ -35,6 +42,43 @@ const BlogPostEditor = ({ post, onSave, onCancel }: BlogPostEditorProps) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [validation, setValidation] = useState<Record<string, string>>({});
+  const [showPreview, setShowPreview] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const handlePaste = async (e: ClipboardEvent) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+
+      for (const item of Array.from(items)) {
+        if (item.type.startsWith('image/')) {
+          e.preventDefault();
+          const file = item.getAsFile();
+          if (file) {
+            setLoading(true);
+            try {
+              const result = await uploadBlogImage(file);
+              if (result) {
+                const markdown = generateImageMarkdown(result.url, 'pasted-image');
+                handleImageUploaded(markdown);
+              }
+            } catch (error) {
+              console.error('Paste upload error:', error);
+              alert('Failed to upload pasted image');
+            } finally {
+              setLoading(false);
+            }
+          }
+        }
+      }
+    };
+
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.addEventListener('paste', handlePaste);
+      return () => textarea.removeEventListener('paste', handlePaste);
+    }
+  }, []);
 
   useEffect(() => {
     if (post) {
@@ -177,6 +221,27 @@ const BlogPostEditor = ({ post, onSave, onCancel }: BlogPostEditorProps) => {
     }
   };
 
+  const handleImageUploaded = (markdown: string) => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const newContent = formData.content.substring(0, start) + '\n' + markdown + '\n' + formData.content.substring(end);
+      
+      setFormData(prev => ({
+        ...prev,
+        content: newContent,
+        readTime: estimateReadTime(newContent)
+      }));
+      
+      // Set cursor position after the inserted markdown
+      setTimeout(() => {
+        textarea.selectionStart = textarea.selectionEnd = start + markdown.length + 2;
+        textarea.focus();
+      }, 0);
+    }
+  };
+
   const predefinedCategories = [
     'Development',
     'Best Practices',
@@ -253,17 +318,68 @@ const BlogPostEditor = ({ post, onSave, onCancel }: BlogPostEditorProps) => {
 
         <div className="form-row">
           <div className="form-group full-width">
-            <label htmlFor="content">Content *</label>
-            <textarea
-              id="content"
-              name="content"
-              value={formData.content}
-              onChange={handleChange}
-              className={validation.content ? 'error' : ''}
-              placeholder="Write your post content here..."
-              rows={15}
-              disabled={loading}
-            />
+            <div className="content-header">
+              <label htmlFor="content">Content * (Markdown supported)</label>
+              <div className="content-actions">
+                <ImageUpload onImageUploaded={handleImageUploaded} textareaRef={textareaRef} />
+                <button
+                  type="button"
+                  onClick={() => setShowPreview(!showPreview)}
+                  className="preview-toggle"
+                  disabled={loading}
+                >
+                  {showPreview ? 'Edit' : 'Preview'}
+                </button>
+              </div>
+            </div>
+            
+            <div className="content-editor">
+              {showPreview ? (
+                <div className="markdown-preview">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeHighlight, rehypeRaw]}
+                    components={{
+                      img: ({ src, alt, ...props }) => (
+                        <img 
+                          src={src} 
+                          alt={alt} 
+                          className="markdown-image"
+                          loading="lazy"
+                          {...props}
+                        />
+                      ),
+                      code: ({ children, className, ...props }) => {
+                        const match = /language-(\w+)/.exec(className || '');
+                        return match ? (
+                          <code className={className} {...props}>
+                            {children}
+                          </code>
+                        ) : (
+                          <code className="inline-code" {...props}>
+                            {children}
+                          </code>
+                        );
+                      }
+                    }}
+                  >
+                    {formData.content || '*No content to preview*'}
+                  </ReactMarkdown>
+                </div>
+              ) : (
+                <textarea
+                  ref={textareaRef}
+                  id="content"
+                  name="content"
+                  value={formData.content}
+                  onChange={handleChange}
+                  className={validation.content ? 'error' : ''}
+                  placeholder="Write your post content here using Markdown... (Paste images directly or use Upload Images button)"
+                  rows={15}
+                  disabled={loading}
+                />
+              )}
+            </div>
             {validation.content && <span className="validation-error">{validation.content}</span>}
           </div>
         </div>

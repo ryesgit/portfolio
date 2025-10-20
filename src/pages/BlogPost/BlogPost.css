@@ -128,6 +128,160 @@
   margin-bottom: 0;
 }
 
+/* Markdown content styling */
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  color: indianred;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.markdown-content h1 {
+  font-size: 2.5rem;
+  border-bottom: 2px solid indianred;
+  padding-bottom: 0.5rem;
+}
+
+.markdown-content h2 {
+  font-size: 2rem;
+  border-bottom: 1px solid rgba(205, 92, 92, 0.3);
+  padding-bottom: 0.3rem;
+}
+
+.markdown-content h3 {
+  font-size: 1.5rem;
+}
+
+.markdown-content h4 {
+  font-size: 1.25rem;
+}
+
+.markdown-content p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.markdown-content code {
+  background: rgba(205, 92, 92, 0.1);
+  color: indianred;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  font-family: 'Courier New', monospace;
+}
+
+.markdown-content pre {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+.dark .markdown-content pre {
+  background: #0f0f0f;
+  border-color: #444;
+}
+
+.light .markdown-content pre {
+  background: #f8f9fa;
+  border-color: #e9ecef;
+}
+
+.markdown-content pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid indianred;
+  margin: 2rem 0;
+  padding-left: 1.5rem;
+  font-style: italic;
+  color: #666;
+}
+
+.dark .markdown-content blockquote {
+  color: #ccc;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+}
+
+.markdown-content li {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+}
+
+.markdown-content a {
+  color: indianred;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.markdown-content a:hover {
+  border-bottom-color: indianred;
+}
+
+.markdown-content .markdown-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.markdown-content .markdown-image:hover {
+  transform: scale(1.02);
+}
+
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.95rem;
+}
+
+.markdown-content th,
+.markdown-content td {
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.dark .markdown-content th,
+.dark .markdown-content td {
+  border-color: #444;
+}
+
+.markdown-content th {
+  background: rgba(205, 92, 92, 0.1);
+  font-weight: 600;
+  color: indianred;
+}
+
+.markdown-content hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, transparent, indianred, transparent);
+  margin: 3rem 0;
+}
+
 .post-footer {
   border-top: 1px solid #eee;
   padding-top: 2rem;

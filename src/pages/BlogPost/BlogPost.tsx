@@ -1,5 +1,9 @@
 import { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeRaw from 'rehype-raw';
 import Container from '../../components/Container/index';
 import Header from '../../components/Header/Header';
 import Dashes from '../../components/ui/Dashes';
@@ -8,6 +12,7 @@ import { BlogPost as BlogPostType } from '../../data/blogPosts';
 import { getBlogPostBySlug } from '../../services/blogService';
 import DarkModeContext from '../../contexts/DarkModeProvider';
 import './BlogPost.css';
+import 'highlight.js/styles/github-dark.css';
 
 function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -119,12 +124,36 @@ function BlogPost() {
                 </div>
               </div>
               
-              <div className="post-content">
-                {post.content.split('\n\n').map((paragraph, index) => (
-                  <p key={index} className="content-paragraph">
-                    {paragraph}
-                  </p>
-                ))}
+              <div className="post-content markdown-content">
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeHighlight, rehypeRaw]}
+                  components={{
+                    img: ({ src, alt, ...props }) => (
+                      <img 
+                        src={src} 
+                        alt={alt} 
+                        className="markdown-image"
+                        loading="lazy"
+                        {...props}
+                      />
+                    ),
+                    code: ({ children, className, ...props }) => {
+                      const match = /language-(\w+)/.exec(className || '');
+                      return match ? (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      ) : (
+                        <code className="inline-code" {...props}>
+                          {children}
+                        </code>
+                      );
+                    }
+                  }}
+                >
+                  {post.content}
+                </ReactMarkdown>
               </div>
               
               <div className="post-footer">
