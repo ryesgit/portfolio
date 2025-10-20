@@ -33,3 +33,35 @@ main {
     color: var(--color-primary);
     font-size: 1.2rem;
 }
+
+.blog-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.blog-posts {
+    flex: 1;
+}
+
+.blog-posts h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--color-text-primary-dark);
+    font-weight: 600;
+    text-align: center;
+}
+
+@media (max-width: 1024px) {
+    .blog-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .blog-posts h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+}

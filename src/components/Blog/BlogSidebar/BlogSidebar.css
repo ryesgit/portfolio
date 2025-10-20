@@ -1,0 +1,116 @@
+.blog-sidebar {
+  width: 100%;
+  max-width: 300px;
+}
+
+.sidebar-section {
+  background: var(--gradient-surface);
+  border: 1px solid var(--color-border-dark);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sidebar-section h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--color-text-primary-dark);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-list li {
+  margin-bottom: 0.5rem;
+}
+
+.category-list a {
+  color: var(--color-text-secondary-dark);
+  text-decoration: none;
+  padding: 0.5rem 0;
+  display: block;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.category-list a:hover {
+  color: var(--color-accent-cyan);
+  background: var(--color-hover-dark);
+  padding-left: 0.5rem;
+}
+
+.tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag-cloud-item {
+  background: var(--color-neutral-700);
+  color: var(--color-text-secondary-dark);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  border: 1px solid var(--color-border-dark);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tag-cloud-item:hover {
+  background: var(--color-accent-cyan);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.sidebar-section p {
+  color: var(--color-text-secondary-dark);
+  line-height: 1.6;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Light theme overrides */
+.light .sidebar-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 1px solid var(--color-neutral-200);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.light .sidebar-section h3 {
+  color: var(--color-neutral-800);
+}
+
+.light .category-list a {
+  color: var(--color-neutral-600);
+}
+
+.light .category-list a:hover {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-800);
+}
+
+.light .tag-cloud-item {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-600);
+  border-color: var(--color-neutral-200);
+}
+
+.light .sidebar-section p {
+  color: var(--color-neutral-600);
+}
+
+@media (max-width: 1024px) {
+  .blog-sidebar {
+    max-width: 100%;
+    order: 2;
+  }
+  
+  .sidebar-section {
+    margin-bottom: 1rem;
+  }
+}

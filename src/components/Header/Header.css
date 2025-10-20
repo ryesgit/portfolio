@@ -25,6 +25,7 @@ header > h1 {
     letter-spacing: 1ch;
 }
 
+header > h1 > a > img,
 header > h1 > img {
     width: 5rem;
     border-radius: 100%;
@@ -32,9 +33,16 @@ header > h1 > img {
     transition: all 0.3s ease;
 }
 
+header > h1 > a > img:hover,
 header > h1 > img:hover {
     border-color: var(--color-primary-300);
     transform: scale(1.05);
+}
+
+header > h1 > a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 }
 
 header > nav > ul {

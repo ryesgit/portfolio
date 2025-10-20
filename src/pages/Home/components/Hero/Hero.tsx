@@ -39,11 +39,11 @@ const Hero = ({ id }: { id?: string }) => {
         </div>
 
         <article>
-          <h2>Student, Developer, Problem Solver</h2>
+          <h2>Blogger, Developer, Tech Enthusiast</h2>
           <p>
-            Computer Engineering senior; <br />
-            Software problem solver <br />
-            and a passionate developer.
+            Sharing insights on technology, <br />
+            development experiences, and <br />
+            creative projects through writing.
           </p>
         </article>
       </motion.div>
