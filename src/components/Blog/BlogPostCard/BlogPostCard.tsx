@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { BlogPost } from "../../../data/blogPosts";
 import "./BlogPostCard.css";
 
@@ -34,9 +35,9 @@ const BlogPostCard = ({ post }: BlogPostCardProps) => {
         ))}
       </div>
       
-      <button className="read-more-btn">
+      <Link to={`/post/${post.slug}`} className="read-more-btn">
         Read More →
-      </button>
+      </Link>
     </article>
   );
 };
