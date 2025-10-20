@@ -1,0 +1,130 @@
+.blog-post-skeleton {
+  background: var(--gradient-surface);
+  border: 1px solid var(--color-border-dark);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.skeleton-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.skeleton-category {
+  width: 80px;
+  height: 20px;
+  background: var(--color-neutral-700);
+  border-radius: 1rem;
+}
+
+.skeleton-date {
+  width: 100px;
+  height: 16px;
+  background: var(--color-neutral-700);
+  border-radius: 0.5rem;
+}
+
+.skeleton-read-time {
+  width: 60px;
+  height: 16px;
+  background: var(--color-neutral-700);
+  border-radius: 0.5rem;
+}
+
+.skeleton-title {
+  width: 85%;
+  height: 24px;
+  background: var(--color-neutral-700);
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-title-short {
+  width: 60%;
+  height: 24px;
+  background: var(--color-neutral-700);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.skeleton-excerpt {
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-line {
+  width: 100%;
+  height: 16px;
+  background: var(--color-neutral-700);
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-line-short {
+  width: 75%;
+  height: 16px;
+  background: var(--color-neutral-700);
+  border-radius: 0.5rem;
+}
+
+.skeleton-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.skeleton-tag {
+  width: 60px;
+  height: 20px;
+  background: var(--color-neutral-700);
+  border-radius: 0.5rem;
+}
+
+.skeleton-button {
+  width: 120px;
+  height: 36px;
+  background: var(--color-neutral-700);
+  border-radius: 0.5rem;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Light theme overrides */
+.light .blog-post-skeleton {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 1px solid var(--color-neutral-200);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.light .skeleton-category,
+.light .skeleton-date,
+.light .skeleton-read-time,
+.light .skeleton-title,
+.light .skeleton-title-short,
+.light .skeleton-line,
+.light .skeleton-line-short,
+.light .skeleton-tag,
+.light .skeleton-button {
+  background: var(--color-neutral-200);
+}
+
+@media (max-width: 768px) {
+  .blog-post-skeleton {
+    padding: 1.5rem;
+  }
+  
+  .skeleton-meta {
+    gap: 0.75rem;
+  }
+}

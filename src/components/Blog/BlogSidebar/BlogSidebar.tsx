@@ -1,8 +1,27 @@
-import { categories, getAllTags } from "../../../data/blogPosts";
+import { useEffect, useState } from "react";
+import { getBlogPosts } from "../../../services/blogService";
 import "./BlogSidebar.css";
 
 const BlogSidebar = () => {
-  const tags = getAllTags();
+  const [categories, setCategories] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const posts = await getBlogPosts();
+      
+      // Extract unique categories
+      const uniqueCategories = [...new Set(posts.map(post => post.category))].sort();
+      setCategories(uniqueCategories);
+      
+      // Extract unique tags
+      const allTags = posts.flatMap(post => post.tags);
+      const uniqueTags = [...new Set(allTags)].sort();
+      setTags(uniqueTags);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <aside className="blog-sidebar">
