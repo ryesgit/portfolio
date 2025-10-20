@@ -8,9 +8,12 @@
   },
   "scripts": {
     "dev": "vite",
+    "dev:blog": "vite --config vite.blog.config.ts",
     "build": "tsc && vite build",
+    "build:blog": "tsc && vite build --config vite.blog.config.ts",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preview:blog": "vite preview --config vite.blog.config.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

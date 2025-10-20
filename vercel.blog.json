@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm run build:blog",
+  "outputDirectory": "dist-blog",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

@@ -2,37 +2,79 @@ import { useEffect, useState } from "react";
 import { getBlogPosts } from "../../../services/blogService";
 import "./BlogSidebar.css";
 
-const BlogSidebar = () => {
+interface BlogSidebarProps {
+  categories?: string[];
+  tags?: string[];
+  selectedCategory?: string;
+  selectedTag?: string;
+  onCategoryChange?: (category: string) => void;
+  onTagChange?: (tag: string) => void;
+  onClearFilters?: () => void;
+}
+
+const BlogSidebar = ({ 
+  categories: propCategories, 
+  tags: propTags, 
+  selectedCategory = '', 
+  selectedTag = '', 
+  onCategoryChange, 
+  onTagChange, 
+  onClearFilters 
+}: BlogSidebarProps = {}) => {
   const [categories, setCategories] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const posts = await getBlogPosts();
-      
-      // Extract unique categories
-      const uniqueCategories = [...new Set(posts.map(post => post.category))].sort();
-      setCategories(uniqueCategories);
-      
-      // Extract unique tags
-      const allTags = posts.flatMap(post => post.tags);
-      const uniqueTags = [...new Set(allTags)].sort();
-      setTags(uniqueTags);
-    };
+    if (!propCategories || !propTags) {
+      const fetchData = async () => {
+        const posts = await getBlogPosts();
+        
+        // Extract unique categories
+        const uniqueCategories = [...new Set(posts.map(post => post.category))].sort();
+        setCategories(uniqueCategories);
+        
+        // Extract unique tags
+        const allTags = posts.flatMap(post => post.tags);
+        const uniqueTags = [...new Set(allTags)].sort();
+        setTags(uniqueTags);
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    }
+  }, [propCategories, propTags]);
+
+  const displayCategories = propCategories || categories;
+  const displayTags = propTags || tags;
 
   return (
     <aside className="blog-sidebar">
       <div className="sidebar-section">
         <h3>Categories</h3>
         <ul className="category-list">
-          {categories.map((category, index) => (
+          {onCategoryChange && (
+            <li>
+              <button 
+                onClick={() => onCategoryChange('')}
+                className={selectedCategory === '' ? 'active' : ''}
+              >
+                All Categories
+              </button>
+            </li>
+          )}
+          {displayCategories.map((category, index) => (
             <li key={index}>
-              <a href={`#category-${category.toLowerCase().replace(' ', '-')}`}>
-                {category}
-              </a>
+              {onCategoryChange ? (
+                <button
+                  onClick={() => onCategoryChange(category)}
+                  className={selectedCategory === category ? 'active' : ''}
+                >
+                  {category}
+                </button>
+              ) : (
+                <a href={`#category-${category.toLowerCase().replace(' ', '-')}`}>
+                  {category}
+                </a>
+              )}
             </li>
           ))}
         </ul>
@@ -41,12 +83,27 @@ const BlogSidebar = () => {
       <div className="sidebar-section">
         <h3>Tags</h3>
         <div className="tags-cloud">
-          {tags.map((tag, index) => (
-            <span key={index} className="tag-cloud-item">
-              {tag}
-            </span>
+          {displayTags.map((tag, index) => (
+            onTagChange ? (
+              <button
+                key={index} 
+                className={`tag-cloud-item ${selectedTag === tag ? 'active' : ''}`}
+                onClick={() => onTagChange(selectedTag === tag ? '' : tag)}
+              >
+                {tag}
+              </button>
+            ) : (
+              <span key={index} className="tag-cloud-item">
+                {tag}
+              </span>
+            )
           ))}
         </div>
+        {onClearFilters && (selectedCategory || selectedTag) && (
+          <button onClick={onClearFilters} className="clear-filters">
+            Clear Filters
+          </button>
+        )}
       </div>
 
       <div className="sidebar-section">
