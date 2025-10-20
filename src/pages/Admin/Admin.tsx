@@ -4,6 +4,7 @@ import Container from '../../components/Container/index';
 import Header from '../../components/Header/Header';
 import Dashes from '../../components/ui/Dashes';
 import AdminLogin from '../../components/Admin/AdminLogin/AdminLogin';
+import BlogPostManager from '../../components/Admin/BlogPostManager/BlogPostManager';
 import ChatBot from '../../components/AIChat/ChatBot';
 import { AuthUser, onAuthStateChange, signOutAdmin } from '../../services/authService';
 import DarkModeContext from '../../contexts/DarkModeProvider';
@@ -70,10 +71,7 @@ function Admin() {
                   </div>
                 </div>
                 
-                <div className="admin-content">
-                  <p>Blog post management interface coming soon...</p>
-                  <p>You are authenticated as an admin and can now manage blog posts.</p>
-                </div>
+                <BlogPostManager />
               </div>
             )}
             

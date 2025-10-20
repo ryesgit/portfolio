@@ -8,6 +8,7 @@ export interface BlogPost {
   tags: string[];
   slug: string;
   readTime: number;
+  published?: boolean;
 }
 
 export const blogPosts: BlogPost[] = [

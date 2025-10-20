@@ -35,7 +35,8 @@ const convertFirestoreDoc = (doc: DocumentData): BlogPost => {
     category: data.category,
     tags: data.tags,
     slug: data.slug,
-    readTime: data.readTime
+    readTime: data.readTime,
+    published: data.published || false
   };
 };
 
@@ -44,8 +45,7 @@ export const getBlogPosts = async (): Promise<BlogPost[]> => {
   try {
     const q = query(
       collection(db, COLLECTION_NAME),
-      where('published', '==', true),
-      orderBy('publishDate', 'desc')
+      where('published', '==', true)
     );
     
     const querySnapshot = await getDocs(q);
@@ -55,9 +55,37 @@ export const getBlogPosts = async (): Promise<BlogPost[]> => {
       posts.push(convertFirestoreDoc(doc));
     });
     
+    // Sort by publishDate in JavaScript instead of Firestore
+    posts.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+    
     return posts;
   } catch (error) {
     console.error('Error fetching blog posts:', error);
+    return [];
+  }
+};
+
+// Get all blog posts for admin (including drafts)
+export const getAllBlogPosts = async (): Promise<BlogPost[]> => {
+  try {
+    const querySnapshot = await getDocs(collection(db, COLLECTION_NAME));
+    const posts: BlogPost[] = [];
+    
+    querySnapshot.forEach((doc) => {
+      posts.push(convertFirestoreDoc(doc));
+    });
+    
+    // Sort by creation date (newest first) in JavaScript
+    posts.sort((a, b) => {
+      // If we don't have creation dates, sort by publish date
+      const dateA = new Date(a.publishDate).getTime();
+      const dateB = new Date(b.publishDate).getTime();
+      return dateB - dateA;
+    });
+    
+    return posts;
+  } catch (error) {
+    console.error('Error fetching all blog posts:', error);
     return [];
   }
 };
