@@ -1,0 +1,97 @@
+import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import Container from '../../components/Container/index';
+import Header from '../../components/Header/Header';
+import Dashes from '../../components/ui/Dashes';
+import AdminLogin from '../../components/Admin/AdminLogin/AdminLogin';
+import ChatBot from '../../components/AIChat/ChatBot';
+import { AuthUser, onAuthStateChange, signOutAdmin } from '../../services/authService';
+import DarkModeContext from '../../contexts/DarkModeProvider';
+import './Admin.css';
+
+function Admin() {
+  const { dark } = useContext(DarkModeContext);
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChange((authUser) => {
+      setUser(authUser);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLoginSuccess = () => {
+    // User state will be updated by the auth state listener
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOutAdmin();
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className={`${dark ? "dark" : "light"}`}>
+        <Header />
+        <Container>
+          <main id="main-content">
+            <div className="admin-loading">Loading...</div>
+          </main>
+        </Container>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className={`${dark ? "dark" : "light"}`}>
+        <Header />
+        <Container>
+          <main id="main-content">
+            <Dashes color="indianred" />
+            
+            {!user?.isAdmin ? (
+              <AdminLogin onLoginSuccess={handleLoginSuccess} />
+            ) : (
+              <div className="admin-dashboard">
+                <div className="admin-header">
+                  <h1>Blog Administration</h1>
+                  <div className="admin-user-info">
+                    <span>Welcome, {user.email}</span>
+                    <button onClick={handleSignOut} className="sign-out-button">
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="admin-content">
+                  <p>Blog post management interface coming soon...</p>
+                  <p>You are authenticated as an admin and can now manage blog posts.</p>
+                </div>
+              </div>
+            )}
+            
+            <Dashes color="indianred" />
+          </main>
+          <aside>
+            <footer style={{
+              textAlign: "center",
+              padding: "1rem 2rem",
+            }}>
+              © Soliman, {new Date().getFullYear()}
+            </footer>
+          </aside>
+        </Container>
+        <ChatBot />
+      </div>
+    </>
+  );
+}
+
+export default Admin;

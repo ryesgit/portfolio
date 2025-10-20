@@ -18,6 +18,7 @@ const COLLECTION_NAME = 'blogPosts';
 
 export interface FirestoreBlogPost extends Omit<BlogPost, 'id' | 'publishDate'> {
   publishDate: Timestamp;
+  published: boolean;
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }

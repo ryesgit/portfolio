@@ -1,0 +1,120 @@
+.admin-loading {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--color-text-secondary-dark);
+  font-size: 1.2rem;
+}
+
+.admin-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border-dark);
+  gap: 2rem;
+}
+
+.admin-header h1 {
+  color: var(--color-text-primary-dark);
+  font-size: 2rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.admin-user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-user-info span {
+  color: var(--color-text-secondary-dark);
+  font-size: 0.9rem;
+}
+
+.sign-out-button {
+  background: transparent;
+  border: 1px solid var(--color-border-dark);
+  color: var(--color-text-secondary-dark);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.sign-out-button:hover {
+  background: var(--color-hover-dark);
+  border-color: var(--color-accent-cyan);
+  color: var(--color-accent-cyan);
+}
+
+.admin-content {
+  background: var(--gradient-surface);
+  border: 1px solid var(--color-border-dark);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.admin-content p {
+  color: var(--color-text-secondary-dark);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+/* Light theme overrides */
+.light .admin-header h1 {
+  color: var(--color-neutral-800);
+}
+
+.light .admin-user-info span {
+  color: var(--color-neutral-600);
+}
+
+.light .sign-out-button {
+  border-color: var(--color-neutral-300);
+  color: var(--color-neutral-600);
+}
+
+.light .sign-out-button:hover {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-800);
+}
+
+.light .admin-content {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 1px solid var(--color-neutral-200);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.light .admin-content p {
+  color: var(--color-neutral-600);
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 1rem 0;
+  }
+  
+  .admin-header {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  
+  .admin-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .admin-content {
+    padding: 1.5rem;
+  }
+}
