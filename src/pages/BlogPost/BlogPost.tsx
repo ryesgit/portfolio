@@ -7,7 +7,6 @@ import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import Container from '../../components/Container/index';
 import Dashes from '../../components/ui/Dashes';
-import ChatBot from '../../components/AIChat/ChatBot';
 import { BlogPost as BlogPostType } from '../../data/blogPosts';
 import { getBlogPostBySlug } from '../../services/blogService';
 import BlogDarkModeContext from '../../contexts/BlogDarkModeProvider';
@@ -327,7 +326,6 @@ function BlogPost() {
             </footer>
           </aside>
         </Container>
-        <ChatBot />
       </div>
     </>
   );

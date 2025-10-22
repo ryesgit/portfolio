@@ -5,7 +5,6 @@ import BlogHeader from '../../components/Header/BlogHeader';
 import Dashes from '../../components/ui/Dashes';
 import AdminLogin from '../../components/Admin/AdminLogin/AdminLogin';
 import BlogPostManager from '../../components/Admin/BlogPostManager/BlogPostManager';
-import ChatBot from '../../components/AIChat/ChatBot';
 import { AuthUser, onAuthStateChange, signOutAdmin } from '../../services/authService';
 import BlogDarkModeContext from '../../contexts/BlogDarkModeProvider';
 import './Admin.css';
@@ -86,7 +85,6 @@ function Admin() {
             </footer>
           </aside>
         </Container>
-        <ChatBot />
       </div>
     </>
   );
