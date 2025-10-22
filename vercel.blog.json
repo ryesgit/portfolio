@@ -3,6 +3,14 @@
   "outputDirectory": "dist-blog",
   "rewrites": [
     {
+      "source": "/post/:slug",
+      "destination": "/blog.html"
+    },
+    {
+      "source": "/admin(.*)",
+      "destination": "/blog.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/blog.html"
     }

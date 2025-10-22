@@ -3,5 +3,11 @@
     "api/upload-image.js": {
       "maxDuration": 30
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/post/:slug",
+      "destination": "/index.html"
+    }
+  ]
 }
