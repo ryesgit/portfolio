@@ -7,7 +7,6 @@ import { auth } from './config/firebase';
 import BlogList from './pages/BlogList/BlogList';
 import BlogPost from './pages/BlogPost/BlogPost';
 import Admin from './pages/Admin/Admin';
-import BlogHeader from './components/Blog/BlogHeader/BlogHeader';
 import './App.css';
 
 function BlogApp() {
@@ -20,6 +19,10 @@ function BlogApp() {
       setLoading(false);
     });
 
+    // Ensure dark mode is applied to document
+    document.documentElement.classList.add('dark');
+    document.body.classList.add('dark');
+
     return () => unsubscribe();
   }, []);
 
@@ -31,8 +34,7 @@ function BlogApp() {
     <DarkModeProvider>
       <AuthProvider>
         <Router>
-          <div className="blog-app">
-            <BlogHeader />
+          <div className="blog-app dark">
             <main className="main-content">
               <Routes>
                 <Route path="/" element={<BlogList />} />

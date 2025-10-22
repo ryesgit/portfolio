@@ -1,41 +1,17 @@
-// import './outline.css';
-
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 import Container from "../../components/Container/index"
 import Header from "../../components/Header/Header"
+import Hero from "./components/Hero/Hero"
+import Experience from "./components/Experience/index"
+import Projects from "./components/Projects/index"
+import Education from "./components/Education/index"
 import Dashes from "../../components/ui/Dashes"
 import "./Home.css"
-import BlogHeader from "../../components/Blog/BlogHeader/BlogHeader"
-import BlogPostCard from "../../components/Blog/BlogPostCard/BlogPostCard"
-import BlogSidebar from "../../components/Blog/BlogSidebar/BlogSidebar"
-import BlogPostsSkeleton from "../../components/ui/SkeletonLoader/BlogPostSkeleton"
 import ChatBot from "../../components/AIChat/ChatBot"
-import { BlogPost } from "../../data/blogPosts"
-import { getBlogPosts } from "../../services/blogService"
 import DarkModeContext from "../../contexts/DarkModeProvider"
 
 function Home() {
   const { dark } = useContext(DarkModeContext)
-  const [posts, setPosts] = useState<BlogPost[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        setLoading(true)
-        const fetchedPosts = await getBlogPosts()
-        setPosts(fetchedPosts)
-      } catch (err) {
-        setError('Failed to load blog posts')
-        console.error('Error fetching posts:', err)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchPosts()
-  }, [])
 
   return (
     <>
@@ -43,27 +19,15 @@ function Home() {
         <Header />
         <Container>
           <main id="main-content">
+            <Hero />
             <Dashes color="indianred" />
-            <BlogHeader />
+            <Experience />
             <Dashes color="indianred" />
-            
-            <div className="blog-layout">
-              <section className="blog-posts">
-                <h2>Recent Posts</h2>
-                {loading && <BlogPostsSkeleton />}
-                {error && <div className="error-message">{error}</div>}
-                {!loading && !error && posts.length === 0 && (
-                  <div className="no-posts">No blog posts found.</div>
-                )}
-                {!loading && !error && posts.map((post) => (
-                  <BlogPostCard key={post.id} post={post} />
-                ))}
-              </section>
-              
-              <BlogSidebar />
-            </div>
+            <Projects />
+            <Dashes color="indianred" />
+            <Education />
+            <Dashes color="indianred" />
           </main>
-          <Dashes color="indianred" />
           <aside>
             <footer style={{
               textAlign: "center",

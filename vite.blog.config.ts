@@ -5,13 +5,16 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/',
+  root: './',
+  publicDir: 'public',
   build: {
     outDir: 'dist-blog',
     rollupOptions: {
-      input: {
-        main: './blog.html'
-      }
+      input: './blog.html'
     }
+  },
+  server: {
+    port: 5175
   },
   define: {
     'import.meta.env.VITE_APP_MODE': '"blog"'
