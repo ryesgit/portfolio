@@ -1,22 +1,13 @@
 {
-  "name": "portfolio-blog",
-  "buildCommand": "npm run build:blog",
-  "outputDirectory": "dist-blog",
-  "installCommand": "pnpm install",
-  "devCommand": "npm run dev:blog",
-  "framework": null,
+  "functions": {
+    "api/upload-image.js": {
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
     {
       "source": "/post/:slug",
-      "destination": "/blog.html"
-    },
-    {
-      "source": "/admin(.*)",
-      "destination": "/blog.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/blog.html"
+      "destination": "/index.html"
     }
   ]
 }

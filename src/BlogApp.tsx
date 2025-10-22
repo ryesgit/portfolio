@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
-import { DarkModeProvider } from './contexts/DarkModeProvider';
+import { BlogDarkModeProvider } from './contexts/BlogDarkModeProvider';
 import { AuthProvider } from './contexts/AuthContext';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './config/firebase';
@@ -31,7 +31,7 @@ function BlogApp() {
 
   return (
     <HelmetProvider>
-      <DarkModeProvider>
+      <BlogDarkModeProvider>
         <AuthProvider>
           <Helmet>
             <title>Chug Blogs</title>
@@ -49,7 +49,7 @@ function BlogApp() {
             </div>
           </Router>
         </AuthProvider>
-      </DarkModeProvider>
+      </BlogDarkModeProvider>
     </HelmetProvider>
   );
 }

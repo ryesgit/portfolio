@@ -9,13 +9,13 @@ import Dashes from '../../components/ui/Dashes';
 import ChatBot from '../../components/AIChat/ChatBot';
 import { BlogPost as BlogPostType } from '../../data/blogPosts';
 import { getBlogPostBySlug } from '../../services/blogService';
-import DarkModeContext from '../../contexts/DarkModeProvider';
+import BlogDarkModeContext from '../../contexts/BlogDarkModeProvider';
 import './BlogPost.css';
 import 'highlight.js/styles/github-dark.css';
 
 function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
-  const { dark } = useContext(DarkModeContext);
+  const { dark } = useContext(BlogDarkModeContext);
   const [post, setPost] = useState<BlogPostType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

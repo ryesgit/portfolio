@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import Container from '../../components/Container/index';
-import Header from '../../components/Header/Header';
+import BlogHeader from '../../components/Header/BlogHeader';
 import Dashes from '../../components/ui/Dashes';
 import AdminLogin from '../../components/Admin/AdminLogin/AdminLogin';
 import BlogPostManager from '../../components/Admin/BlogPostManager/BlogPostManager';
 import ChatBot from '../../components/AIChat/ChatBot';
 import { AuthUser, onAuthStateChange, signOutAdmin } from '../../services/authService';
-import DarkModeContext from '../../contexts/DarkModeProvider';
+import BlogDarkModeContext from '../../contexts/BlogDarkModeProvider';
 import './Admin.css';
 
 function Admin() {
-  const { dark } = useContext(DarkModeContext);
+  const { dark } = useContext(BlogDarkModeContext);
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -39,7 +39,7 @@ function Admin() {
   if (loading) {
     return (
       <div className={`${dark ? "dark" : "light"}`}>
-        <Header />
+        <BlogHeader />
         <Container>
           <main id="main-content">
             <div className="admin-loading">Loading...</div>
@@ -52,7 +52,7 @@ function Admin() {
   return (
     <>
       <div className={`${dark ? "dark" : "light"}`}>
-        <Header />
+        <BlogHeader />
         <Container>
           <main id="main-content">
             <Dashes color="indianred" />
