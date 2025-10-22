@@ -8,6 +8,17 @@
   "rewrites": [
     {
       "source": "/post/:slug",
+      "destination": "/api/post/:slug",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(bot|crawl|slurp|spider|facebook|twitter|linkedin|whatsapp).*"
+        }
+      ]
+    },
+    {
+      "source": "/post/:slug",
       "destination": "/blog.html"
     },
     {
