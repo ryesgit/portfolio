@@ -33,8 +33,9 @@ function BlogApp() {
     <HelmetProvider>
       <BlogDarkModeProvider>
         <AuthProvider>
-          <Helmet>
-            <title>Chug Blogs</title>
+          <Helmet titleTemplate="%s" defaultTitle="Chug Blogs - Tech, Science, Life & Meta">
+            <meta name="application-name" content="Chug Blogs" />
+            <meta name="apple-mobile-web-app-title" content="Chug Blogs" />
           </Helmet>
           <Router>
             <div className="blog-app dark">
