@@ -1,17 +1,19 @@
 .container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
 }
 
 .container > main {
-    width: 80%;
+  width: 80%;
+  background: transparent;
 }
 
 @media screen and (max-width: 750px) {
-    .container > main {
-        width: 90%;
-    }
+  .container > main {
+    width: 90%;
+  }
 }

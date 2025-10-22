@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { DarkModeProvider } from './contexts/DarkModeProvider';
 import { AuthProvider } from './contexts/AuthContext';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -10,12 +11,10 @@ import Admin from './pages/Admin/Admin';
 import './App.css';
 
 function BlogApp() {
-  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    const unsubscribe = onAuthStateChanged(auth, () => {
       setLoading(false);
     });
 
@@ -31,29 +30,27 @@ function BlogApp() {
   }
 
   return (
-    <DarkModeProvider>
-      <AuthProvider>
-        <Router>
-          <div className="blog-app dark">
-            <main className="main-content">
-              <Routes>
-                <Route path="/" element={<BlogList />} />
-                <Route path="/post/:slug" element={<BlogPost />} />
-                <Route 
-                  path="/admin/*" 
-                  element={
-                    user?.email === import.meta.env.VITE_ADMIN_EMAIL 
-                      ? <Admin /> 
-                      : <Navigate to="/" replace />
-                  } 
-                />
-                <Route path="*" element={<div>Page not found</div>} />
-              </Routes>
-            </main>
-          </div>
-        </Router>
-      </AuthProvider>
-    </DarkModeProvider>
+    <HelmetProvider>
+      <DarkModeProvider>
+        <AuthProvider>
+          <Helmet>
+            <title>Chug Blogs</title>
+          </Helmet>
+          <Router>
+            <div className="blog-app dark">
+              <main className="main-content">
+                <Routes>
+                  <Route path="/" element={<BlogList />} />
+                  <Route path="/post/:slug" element={<BlogPost />} />
+                  <Route path="/admin/*" element={<Admin />} />
+                  <Route path="*" element={<div>Page not found</div>} />
+                </Routes>
+              </main>
+            </div>
+          </Router>
+        </AuthProvider>
+      </DarkModeProvider>
+    </HelmetProvider>
   );
 }
 

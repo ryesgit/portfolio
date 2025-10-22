@@ -5,7 +5,6 @@ import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import Container from '../../components/Container/index';
-import Header from '../../components/Header/Header';
 import Dashes from '../../components/ui/Dashes';
 import ChatBot from '../../components/AIChat/ChatBot';
 import { BlogPost as BlogPostType } from '../../data/blogPosts';
@@ -59,7 +58,6 @@ function BlogPost() {
   if (loading) {
     return (
       <div className={`${dark ? "dark" : "light"}`}>
-        <Header />
         <Container>
           <main id="main-content">
             <div className="blog-post-loading">
@@ -75,7 +73,6 @@ function BlogPost() {
   if (error || !post) {
     return (
       <div className={`${dark ? "dark" : "light"}`}>
-        <Header />
         <Container>
           <main id="main-content">
             <Dashes color="indianred" />
@@ -96,7 +93,6 @@ function BlogPost() {
   return (
     <>
       <div className={`${dark ? "dark" : "light"}`}>
-        <Header />
         <Container>
           <main id="main-content">
             <Dashes color="indianred" />

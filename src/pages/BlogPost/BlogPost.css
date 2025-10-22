@@ -18,8 +18,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .blog-post-error {
@@ -32,14 +36,18 @@
   margin-bottom: 1rem;
 }
 
-.back-home-link, .back-link, .nav-button {
+.back-home-link,
+.back-link,
+.nav-button {
   color: indianred;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
 }
 
-.back-home-link:hover, .back-link:hover, .nav-button:hover {
+.back-home-link:hover,
+.back-link:hover,
+.nav-button:hover {
   color: #b33;
   text-decoration: underline;
 }
@@ -48,10 +56,12 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
+  background: transparent;
 }
 
 .post-header {
   margin-bottom: 3rem;
+  background: transparent;
 }
 
 .back-link {
@@ -82,7 +92,8 @@
   font-weight: 500;
 }
 
-.post-date, .read-time {
+.post-date,
+.read-time {
   padding: 0.25rem 0;
 }
 
@@ -117,15 +128,50 @@
 .post-content {
   line-height: 1.8;
   margin-bottom: 3rem;
+  background: transparent;
 }
 
 .content-paragraph {
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
+  background: transparent;
 }
 
 .content-paragraph:last-child {
   margin-bottom: 0;
+}
+
+.markdown-content {
+  background: transparent;
+}
+
+article {
+  background: transparent !important;
+}
+
+main {
+  background: transparent !important;
+}
+
+/* Force all content containers to be transparent */
+.blog-post-detail * {
+  background-color: transparent !important;
+}
+
+/* Override CSS variables for blog post page */
+.dark .blog-post-detail,
+.dark .blog-post-detail *,
+.dark main,
+.dark body {
+  --bg-primary: transparent !important;
+  --bg-secondary: transparent !important;
+  --bg-surface: transparent !important;
+  --gradient-dark: transparent !important;
+  --gradient-surface: transparent !important;
+  --color-dark-bg-primary: transparent !important;
+  --color-dark-bg-secondary: transparent !important;
+  --color-dark-bg-tertiary: transparent !important;
+  --color-dark-surface: transparent !important;
 }
 
 /* Markdown content styling */
@@ -166,6 +212,7 @@
   margin-bottom: 1.5rem;
   line-height: 1.8;
   font-size: 1.1rem;
+  background: transparent;
 }
 
 .markdown-content code {
@@ -174,11 +221,11 @@
   padding: 0.2rem 0.4rem;
   border-radius: 0.25rem;
   font-size: 0.9em;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
 }
 
 .markdown-content pre {
-  background: #1a1a1a;
+  background: transparent;
   border: 1px solid #333;
   border-radius: 0.5rem;
   padding: 1.5rem;
@@ -187,12 +234,12 @@
 }
 
 .dark .markdown-content pre {
-  background: #0f0f0f;
+  background: transparent;
   border-color: #444;
 }
 
 .light .markdown-content pre {
-  background: #f8f9fa;
+  background: transparent;
   border-color: #e9ecef;
 }
 
@@ -299,7 +346,7 @@
 .post-excerpt-footer {
   font-style: italic;
   color: #666;
-  background: #f9f9f9;
+  background: transparent;
   padding: 1rem;
   border-left: 4px solid indianred;
   margin: 0;
@@ -307,7 +354,7 @@
 
 .dark .post-excerpt-footer {
   color: #ccc;
-  background: #1a1a1a;
+  background: transparent;
 }
 
 .post-navigation {
@@ -333,16 +380,16 @@
   .blog-post-detail {
     padding: 1rem;
   }
-  
+
   .post-title {
     font-size: 2rem;
   }
-  
+
   .post-meta {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .content-paragraph {
     font-size: 1rem;
   }
