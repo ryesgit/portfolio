@@ -12,14 +12,14 @@ interface BlogSidebarProps {
   onClearFilters?: () => void;
 }
 
-const BlogSidebar = ({ 
-  categories: propCategories, 
-  tags: propTags, 
-  selectedCategory = '', 
-  selectedTag = '', 
-  onCategoryChange, 
-  onTagChange, 
-  onClearFilters 
+const BlogSidebar = ({
+  categories: propCategories,
+  tags: propTags,
+  selectedCategory = "",
+  selectedTag = "",
+  onCategoryChange,
+  onTagChange,
+  onClearFilters,
 }: BlogSidebarProps = {}) => {
   const [categories, setCategories] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
@@ -28,13 +28,15 @@ const BlogSidebar = ({
     if (!propCategories || !propTags) {
       const fetchData = async () => {
         const posts = await getBlogPosts();
-        
+
         // Extract unique categories
-        const uniqueCategories = [...new Set(posts.map(post => post.category))].sort();
+        const uniqueCategories = [
+          ...new Set(posts.map((post) => post.category)),
+        ].sort();
         setCategories(uniqueCategories);
-        
+
         // Extract unique tags
-        const allTags = posts.flatMap(post => post.tags);
+        const allTags = posts.flatMap((post) => post.tags);
         const uniqueTags = [...new Set(allTags)].sort();
         setTags(uniqueTags);
       };
@@ -53,9 +55,9 @@ const BlogSidebar = ({
         <ul className="category-list">
           {onCategoryChange && (
             <li>
-              <button 
-                onClick={() => onCategoryChange('')}
-                className={selectedCategory === '' ? 'active' : ''}
+              <button
+                onClick={() => onCategoryChange("")}
+                className={selectedCategory === "" ? "active" : ""}
               >
                 All Categories
               </button>
@@ -66,12 +68,14 @@ const BlogSidebar = ({
               {onCategoryChange ? (
                 <button
                   onClick={() => onCategoryChange(category)}
-                  className={selectedCategory === category ? 'active' : ''}
+                  className={selectedCategory === category ? "active" : ""}
                 >
                   {category}
                 </button>
               ) : (
-                <a href={`#category-${category.toLowerCase().replace(' ', '-')}`}>
+                <a
+                  href={`#category-${category.toLowerCase().replace(" ", "-")}`}
+                >
                   {category}
                 </a>
               )}
@@ -83,12 +87,14 @@ const BlogSidebar = ({
       <div className="sidebar-section">
         <h3>Tags</h3>
         <div className="tags-cloud">
-          {displayTags.map((tag, index) => (
+          {displayTags.map((tag, index) =>
             onTagChange ? (
               <button
-                key={index} 
-                className={`tag-cloud-item ${selectedTag === tag ? 'active' : ''}`}
-                onClick={() => onTagChange(selectedTag === tag ? '' : tag)}
+                key={index}
+                className={`tag-cloud-item ${
+                  selectedTag === tag ? "active" : ""
+                }`}
+                onClick={() => onTagChange(selectedTag === tag ? "" : tag)}
               >
                 {tag}
               </button>
@@ -97,7 +103,7 @@ const BlogSidebar = ({
                 {tag}
               </span>
             )
-          ))}
+          )}
         </div>
         {onClearFilters && (selectedCategory || selectedTag) && (
           <button onClick={onClearFilters} className="clear-filters">
@@ -109,9 +115,9 @@ const BlogSidebar = ({
       <div className="sidebar-section">
         <h3>About</h3>
         <p>
-          Computer Engineering student sharing insights on technology, 
-          development, and problem-solving. Welcome to my digital space 
-          where I document my learning journey.
+          I write some of my learnings, reflections, and whatever it may be
+          here. <br />
+          Some of them are coherent, hopefully.
         </p>
       </div>
     </aside>
