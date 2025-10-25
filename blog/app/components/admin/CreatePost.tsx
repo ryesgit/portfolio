@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 import rehypeHighlight from 'rehype-highlight';
+import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import { type BlogPost } from '~/lib/blog.client';
+import 'katex/dist/katex.min.css';
 
 interface CreatePostProps {
   onBack: () => void;
@@ -167,8 +170,8 @@ export default function CreatePost({ onBack, onPostCreated }: CreatePostProps) {
                 <div className="markdown-preview" style={{ minHeight: '500px' }}>
                   {formData.content ? (
                     <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      rehypePlugins={[rehypeHighlight, rehypeRaw]}
+                      remarkPlugins={[remarkGfm, remarkMath]}
+                      rehypePlugins={[rehypeKatex, rehypeHighlight, rehypeRaw]}
                       components={{
                         pre: ({ children, ...props }) => (
                           <pre className="code-block" {...props}>
