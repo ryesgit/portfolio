@@ -1,11 +1,15 @@
 {
   "buildCommand": "cd blog && pnpm install && pnpm run build",
-  "outputDirectory": "blog/build/client",
   "installCommand": "cd blog && pnpm install",
+  "functions": {
+    "blog/build/server/index.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/blog/build/server/index.js"
     }
   ]
 }
