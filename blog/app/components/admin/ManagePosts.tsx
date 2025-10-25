@@ -22,11 +22,19 @@ export default function ManagePosts({ onBack, onEditPost }: ManagePostsProps) {
 
   const loadPosts = async () => {
     try {
-      // Use the same approach as the working homepage
-      const { getAllBlogPosts } = await import('~/lib/blog.client');
-      const allPosts = await getAllBlogPosts();
-      // Include both published and unpublished posts for admin management
-      setPosts(allPosts);
+      // Try to get all posts first (for admin), fallback to published only
+      const { getAllBlogPosts, getBlogPosts } = await import('~/lib/blog.client');
+      
+      try {
+        // First try to get all posts (requires admin permissions)
+        const allPosts = await getAllBlogPosts();
+        setPosts(allPosts);
+      } catch (adminError) {
+        console.log('Admin access not available, loading published posts only:', adminError);
+        // Fallback to published posts only if admin access fails
+        const publishedPosts = await getBlogPosts();
+        setPosts(publishedPosts);
+      }
     } catch (error) {
       console.error('Error loading posts in ManagePosts:', error);
       setPosts([]);
