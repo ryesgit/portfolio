@@ -22,18 +22,43 @@ export default function ManagePosts({ onBack, onEditPost }: ManagePostsProps) {
 
   const loadPosts = async () => {
     try {
-      // Try to get all posts first (for admin), fallback to published only
-      const { getAllBlogPosts, getBlogPosts } = await import('~/lib/blog.client');
+      // For admin, get both published and unpublished posts separately
+      const { getBlogPosts } = await import('~/lib/blog.client');
+      const { collection, query, where, getDocs } = await import('firebase/firestore');
+      const { db } = await import('~/lib/firebase.client');
       
       try {
-        // First try to get all posts (requires admin permissions)
-        const allPosts = await getAllBlogPosts();
-        setPosts(allPosts);
-      } catch (adminError) {
-        console.log('Admin access not available, loading published posts only:', adminError);
-        // Fallback to published posts only if admin access fails
+        // Get published posts
         const publishedPosts = await getBlogPosts();
-        setPosts(publishedPosts);
+        
+        // Try to get unpublished posts (drafts) separately if authenticated
+        let draftPosts: any[] = [];
+        try {
+          const draftsQuery = query(
+            collection(db, 'blogPosts'),
+            where('published', '==', false)
+          );
+          const draftsSnapshot = await getDocs(draftsQuery);
+          draftPosts = draftsSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            publishDate: doc.data().publishDate?.toDate?.()?.toISOString?.()?.split('T')[0] || doc.data().publishDate,
+            published: false
+          }));
+        } catch (draftError) {
+          console.log('Could not load draft posts:', draftError);
+        }
+        
+        // Combine published and draft posts
+        const allPosts = [...publishedPosts, ...draftPosts];
+        
+        // Sort by publishDate (newest first)
+        allPosts.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+        
+        setPosts(allPosts);
+      } catch (publishedError) {
+        console.log('Could not load posts:', publishedError);
+        setPosts([]);
       }
     } catch (error) {
       console.error('Error loading posts in ManagePosts:', error);
