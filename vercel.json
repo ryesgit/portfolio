@@ -2,14 +2,14 @@
   "buildCommand": "cd blog && pnpm install && pnpm run build",
   "installCommand": "cd blog && pnpm install",
   "functions": {
-    "blog/build/server/index.js": {
+    "blog/build/server/nodejs_*/index.js": {
       "runtime": "nodejs20.x"
     }
   },
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/blog/build/server/index.js"
+      "destination": "/blog/build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js"
     }
   ]
 }
