@@ -31,23 +31,9 @@ export default function ManagePosts({ onBack, onEditPost }: ManagePostsProps) {
         // Get published posts
         const publishedPosts = await getBlogPosts();
         
-        // Try to get unpublished posts (drafts) separately if authenticated
+        // Note: Draft posts require Firestore security rules to allow authenticated reads
+        // For now, only showing published posts due to permission restrictions
         let draftPosts: any[] = [];
-        try {
-          const draftsQuery = query(
-            collection(db, 'blogPosts'),
-            where('published', '==', false)
-          );
-          const draftsSnapshot = await getDocs(draftsQuery);
-          draftPosts = draftsSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-            publishDate: doc.data().publishDate?.toDate?.()?.toISOString?.()?.split('T')[0] || doc.data().publishDate,
-            published: false
-          }));
-        } catch (draftError) {
-          console.log('Could not load draft posts:', draftError);
-        }
         
         // Combine published and draft posts
         const allPosts = [...publishedPosts, ...draftPosts];

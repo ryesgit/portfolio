@@ -23,7 +23,8 @@ export default function CreatePost({ onBack, onPostCreated }: CreatePostProps) {
     tags: '',
     slug: '',
     readTime: 1,
-    published: false
+    published: false,
+    publishDate: new Date().toISOString().split('T')[0] // Today's date in YYYY-MM-DD format
   });
 
   const [saving, setSaving] = useState(false);

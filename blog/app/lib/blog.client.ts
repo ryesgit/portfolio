@@ -154,9 +154,19 @@ export const getBlogPostBySlug = async (slug: string): Promise<BlogPost | null> 
 export const createBlogPost = async (post: BlogPostInput): Promise<string | null> => {
   try {
     const now = Timestamp.now();
+    
+    // Handle publishDate - use provided date or current date if invalid
+    let publishDate = now;
+    if (post.publishDate) {
+      const inputDate = new Date(post.publishDate);
+      if (!isNaN(inputDate.getTime())) {
+        publishDate = Timestamp.fromDate(inputDate);
+      }
+    }
+    
     const docRef = await addDoc(collection(db, COLLECTION_NAME), {
       ...post,
-      publishDate: Timestamp.fromDate(new Date(post.publishDate)),
+      publishDate,
       tags: Array.isArray(post.tags) ? post.tags : post.tags.split(',').map((tag: string) => tag.trim()),
       published: post.published || false,
       createdAt: now,
