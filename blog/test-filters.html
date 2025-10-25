@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Filter Test</title>
+</head>
+<body>
+    <h1>Filter Test Page</h1>
+    <p>Open browser console and visit: http://localhost:5173</p>
+    <script>
+        // Test script to check if filters are working
+        setTimeout(() => {
+            console.log('Testing filter functionality...');
+            
+            // Check if search input exists
+            const searchInput = document.querySelector('.search-input');
+            console.log('Search input found:', !!searchInput);
+            
+            // Check if filter dropdowns exist
+            const categorySelect = document.querySelector('select[id="category-filter"]');
+            const tagSelect = document.querySelector('select[id="tag-filter"]');
+            console.log('Category filter found:', !!categorySelect);
+            console.log('Tag filter found:', !!tagSelect);
+            
+            // Test search functionality
+            if (searchInput) {
+                console.log('Testing search...');
+                searchInput.value = 'test';
+                searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+                
+                setTimeout(() => {
+                    const posts = document.querySelectorAll('.blog-post-card');
+                    console.log('Posts visible after search:', posts.length);
+                }, 100);
+            }
+            
+        }, 2000);
+    </script>
+</body>
+</html>

@@ -19,7 +19,105 @@ function getFirstImageFromContent(content: string): string | null {
 }
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  if (!data?.post) {
+    return [
+      { title: "Post Not Found - Chug Blogs" },
+      { name: "description", content: "The requested blog post could not be found." },
+    ];
+  }
+
+  const { post } = data;
+  // Use fallback meta if meta is null
+  const meta = data.meta || {
+    blogTitle: 'Chug Blogs',
+    blogDescription: 'A modern blog powered by React Router and Firebase',
+    blogKeywords: 'blog, tech, programming, development',
+    authorName: 'Lee Ryan Soliman',
+    siteUrl: 'https://blog.leeryan.dev',
+    ogImage: 'https://blog.leeryan.dev/og-image.jpg',
+    twitterHandle: '@leeryansoliman',
+    googleAnalyticsId: '',
+    favicon: '/favicon.ico',
+    themeColor: '#dc2626'
+  };
+
+  const seoImage = getFirstImageFromContent(post.content) || meta.ogImage;
+
+  return [
+    { title: `${post.title} - ${meta.blogTitle}` },
+    { name: "description", content: post.excerpt },
+    { name: "keywords", content: post.tags.join(", ") },
+    { name: "author", content: meta.authorName },
+    { name: "robots", content: "index, follow" },
+
+    // Open Graph / Facebook
+    { property: "og:type", content: "article" },
+    { property: "og:title", content: post.title },
+    { property: "og:description", content: post.excerpt },
+    { property: "og:url", content: `${meta.siteUrl}/post/${post.slug}` },
+    { property: "og:site_name", content: meta.blogTitle },
+    { property: "og:image", content: seoImage },
+    { property: "og:image:width", content: "1200" },
+    { property: "og:image:height", content: "630" },
+    { property: "og:locale", content: "en_US" },
+    { property: "article:author", content: meta.authorName },
+    { property: "article:published_time", content: post.publishDate },
+    { property: "article:section", content: post.category },
+    ...post.tags.map((tag) => ({ property: "article:tag", content: tag })),
+
+    // Twitter
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: post.title },
+    { name: "twitter:description", content: post.excerpt },
+    { name: "twitter:image", content: seoImage },
+    { name: "twitter:creator", content: meta.twitterHandle },
+
+    // Additional SEO
+    { name: "theme-color", content: meta.themeColor },
+    { tagName: "link", rel: "canonical", href: `${meta.siteUrl}/post/${post.slug}` },
+    
+    // Structured data (JSON-LD)
+    {
+      tagName: "script",
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "description": post.excerpt,
+        "image": seoImage,
+        "author": {
+          "@type": "Person",
+          "name": meta.authorName
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": meta.blogTitle,
+          "logo": {
+            "@type": "ImageObject",
+            "url": `${meta.siteUrl}/favicon.ico`
+          }
+        },
+        "datePublished": post.publishDate,
+        "dateModified": post.publishDate,
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": `${meta.siteUrl}/post/${post.slug}`
+        },
+        "articleSection": post.category,
+        "keywords": post.tags.join(", "),
+        "wordCount": post.content.split(' ').length,
+        "timeRequired": `PT${post.readTime}M`
+      })
+    },
+  ];
+  
+  // Original logic commented out for testing
+  /*
+  console.log('Meta function called with data:', data);
+  
   if (!data?.post || !data?.meta) {
+    console.log('No post or meta data found, returning fallback meta');
     return [
       { title: "Post Not Found - Chug Blogs" },
       {
@@ -32,6 +130,9 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { post, meta } = data;
   const seoImage =
     getFirstImageFromContent(post.content) || meta.ogImage;
+
+  console.log('Generating meta tags for post:', post.title);
+  console.log('SEO image:', seoImage);
 
   return [
     { title: `${post.title} - ${meta.blogTitle}` },
@@ -73,6 +174,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
       href: `${meta.siteUrl}/post/${post.slug}`,
     },
   ];
+  */
 };
 
 export async function loader({ params }: LoaderFunctionArgs) {

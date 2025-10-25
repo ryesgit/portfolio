@@ -13,16 +13,23 @@ export default function ManagePosts({ onBack, onEditPost }: ManagePostsProps) {
   const [filter, setFilter] = useState<'all' | 'published' | 'draft'>('all');
 
   useEffect(() => {
-    loadPosts();
+    // Add a small delay to ensure Firebase is properly initialized
+    const timer = setTimeout(() => {
+      loadPosts();
+    }, 100);
+    return () => clearTimeout(timer);
   }, []);
 
   const loadPosts = async () => {
     try {
+      // Use the same approach as the working homepage
       const { getAllBlogPosts } = await import('~/lib/blog.client');
-      const fetchedPosts = await getAllBlogPosts();
-      setPosts(fetchedPosts);
+      const allPosts = await getAllBlogPosts();
+      // Include both published and unpublished posts for admin management
+      setPosts(allPosts);
     } catch (error) {
-      console.error('Error loading posts:', error);
+      console.error('Error loading posts in ManagePosts:', error);
+      setPosts([]);
     } finally {
       setLoading(false);
     }

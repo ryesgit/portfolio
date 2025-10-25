@@ -56,15 +56,21 @@ export async function loader() {
 
 export default function BlogIndex() {
   const { meta } = useLoaderData<typeof loader>();
-  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedTag, setSelectedTag] = useState('all');
 
   useEffect(() => {
     const loadPosts = async () => {
       try {
-        const { getBlogPosts } = await import('~/lib/blog.client');
-        const fetchedPosts = await getBlogPosts();
-        setPosts(fetchedPosts);
+        const { getAllBlogPosts } = await import('~/lib/blog.client');
+        const allPosts = await getAllBlogPosts();
+        const fetchedPosts = allPosts.filter(post => post.published);
+        setAllPosts(fetchedPosts);
+        setFilteredPosts(fetchedPosts);
       } catch (error) {
         console.error('Error loading posts:', error);
       } finally {
@@ -74,6 +80,37 @@ export default function BlogIndex() {
     
     loadPosts();
   }, []);
+
+  // Filter posts when search term, category, or tag changes
+  useEffect(() => {
+    let filtered = allPosts;
+
+    // Filter by search term
+    if (searchTerm) {
+      filtered = filtered.filter(post =>
+        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+    }
+
+    // Filter by category
+    if (selectedCategory !== 'all') {
+      filtered = filtered.filter(post => post.category === selectedCategory);
+    }
+
+    // Filter by tag
+    if (selectedTag !== 'all') {
+      filtered = filtered.filter(post => post.tags.includes(selectedTag));
+    }
+
+    setFilteredPosts(filtered);
+  }, [allPosts, searchTerm, selectedCategory, selectedTag]);
+
+  // Get unique categories and tags
+  const categories = ['all', ...new Set(allPosts.map(post => post.category))];
+  const tags = ['all', ...new Set(allPosts.flatMap(post => post.tags))];
 
   if (loading) {
     return (
@@ -100,16 +137,71 @@ export default function BlogIndex() {
           </div>
 
           <div className="blog-controls">
-            <input
-              type="text"
-              placeholder="Search posts..."
-              className="search-input"
-            />
+            <div className="search-box">
+              <input
+                type="text"
+                placeholder="Search posts..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input"
+              />
+            </div>
+            
+            <div className="filter-controls">
+              <div className="filter-group">
+                <label htmlFor="category-filter">Category:</label>
+                <select
+                  id="category-filter"
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="filter-select"
+                >
+                  {categories.map(category => (
+                    <option key={category} value={category}>
+                      {category === 'all' ? 'All Categories' : category}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="filter-group">
+                <label htmlFor="tag-filter">Tag:</label>
+                <select
+                  id="tag-filter"
+                  value={selectedTag}
+                  onChange={(e) => setSelectedTag(e.target.value)}
+                  className="filter-select"
+                >
+                  {tags.map(tag => (
+                    <option key={tag} value={tag}>
+                      {tag === 'all' ? 'All Tags' : tag}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {(searchTerm || selectedCategory !== 'all' || selectedTag !== 'all') && (
+                <button
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedCategory('all');
+                    setSelectedTag('all');
+                  }}
+                  className="clear-filters-btn"
+                >
+                  Clear Filters
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="blog-stats">
+            <p>{filteredPosts.length} of {allPosts.length} posts</p>
           </div>
 
           <div className="blog-posts">
-            {posts.length > 0 ? (
-              posts.map((post) => (
+            {filteredPosts.length > 0 ? (
+              filteredPosts.map((post) => (
                 <BlogPostCard key={post.id} post={post} />
               ))
             ) : (
@@ -121,7 +213,7 @@ export default function BlogIndex() {
           </div>
         </div>
 
-        <BlogSidebar posts={posts} />
+        <BlogSidebar posts={allPosts} />
       </div>
     </div>
   );
