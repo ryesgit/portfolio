@@ -1,46 +1,44 @@
 {
-  "name": "portfolio",
+  "name": "blog",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": ">=18.12.0"
+    "node": "20.x"
   },
   "scripts": {
-    "dev": "vite",
-    "dev:blog": "vite --config vite.blog.config.ts",
-    "build": "tsc && vite build",
-    "build:blog": "tsc && vite build --config vite.blog.config.ts",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "preview:blog": "vite preview --config vite.blog.config.ts"
+    "build": "react-router build",
+    "dev": "react-router dev",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.24.1",
+    "@react-router/node": "^7.9.2",
+    "@react-router/serve": "^7.9.2",
+    "@vercel/react-router": "^1.2.3",
     "firebase": "^12.4.0",
-    "framer-motion": "^10.16.2",
-    "highlight.js": "^11.11.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-helmet-async": "^2.0.5",
-    "react-icons": "^4.10.1",
-    "react-loading-skeleton": "^3.5.0",
+    "isbot": "^5.1.31",
+    "katex": "^0.16.25",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "react-markdown": "^10.1.0",
-    "react-router-dom": "^7.9.4",
+    "react-router": "^7.9.2",
     "rehype-highlight": "^7.0.2",
+    "rehype-katex": "^7.0.1",
     "rehype-raw": "^7.0.0",
-    "remark-gfm": "^4.0.1"
+    "remark-footnotes": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0",
+    "sonner": "^2.0.7"
   },
   "devDependencies": {
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "@vitejs/plugin-react": "^4.0.3",
-    "eslint": "^8.45.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "@react-router/dev": "^7.9.2",
+    "@tailwindcss/vite": "^4.1.13",
+    "@types/node": "^22",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.7",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }
