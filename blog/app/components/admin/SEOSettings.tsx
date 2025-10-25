@@ -1,41 +1,60 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
+import { type BlogMeta } from '~/lib/blog.client';
 
 interface SEOSettingsProps {
   onBack: () => void;
 }
 
 export default function SEOSettings({ onBack }: SEOSettingsProps) {
-  const [seoSettings, setSeoSettings] = useState({
-    siteTitle: 'Chug Blogs - Tech, Science, Life & Meta Thoughts',
-    siteDescription: 'Personal blog by Lee Ryan Soliman featuring thoughts on technology, science, life, and meta topics. Explore insights from a software engineer\'s perspective.',
-    siteKeywords: 'blog, technology, science, life, meta, software engineering, programming, web development, Lee Ryan Soliman',
-    canonicalUrl: 'https://blog.leeryan.dev',
+  const [settings, setSettings] = useState<BlogMeta>({
+    blogTitle: 'Chug Blogs',
+    blogDescription: 'Thoughts on tech, science, life, and everything in between',
+    blogKeywords: 'blog, tech, programming, development',
+    authorName: 'Lee Ryan Soliman',
+    siteUrl: 'https://blog.leeryan.dev',
     ogImage: 'https://blog.leeryan.dev/og-image.jpg',
-    twitterCard: 'summary_large_image',
-    twitterCreator: '@leeryansoliman',
-    themeColor: '#dc2626',
-    enableSitemap: true,
-    enableRobots: true,
-    robotsContent: 'index, follow',
+    twitterHandle: '@leeryansoliman',
     googleAnalyticsId: '',
-    googleSearchConsoleId: ''
+    favicon: '/favicon.ico',
+    themeColor: '#dc2626'
   });
 
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const { getBlogMeta } = await import('~/lib/blog.client');
+        const meta = await getBlogMeta();
+        if (meta) {
+          setSettings(meta);
+        }
+      } catch (error) {
+        console.error('Error loading SEO settings:', error);
+        toast.error('Error loading SEO settings');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSettings();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
 
     try {
-      // TODO: Implement actual SEO settings save
-      console.log('Saving SEO settings:', seoSettings);
+      const { updateBlogMeta } = await import('~/lib/blog.client');
+      const success = await updateBlogMeta(settings);
       
-      // Simulate API call - TODO: Implement actual SEO settings save
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast.success('SEO settings saved successfully!');
+      if (success) {
+        toast.success('SEO settings saved successfully!');
+      } else {
+        toast.error('Failed to save SEO settings. Please try again.');
+      }
     } catch (error) {
       console.error('Error saving SEO settings:', error);
       toast.error('Error saving SEO settings. Please try again.');
@@ -43,6 +62,22 @@ export default function SEOSettings({ onBack }: SEOSettingsProps) {
       setSaving(false);
     }
   };
+
+  if (loading) {
+    return (
+      <>
+        <div className="blog-header">
+          <h1>SEO Settings</h1>
+          <p>Loading SEO settings...</p>
+        </div>
+        <div className="admin-content">
+          <div className="admin-card">
+            <p>Loading SEO settings...</p>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -71,167 +106,126 @@ export default function SEOSettings({ onBack }: SEOSettingsProps) {
       <div className="admin-content">
         <form id="seo-settings-form" onSubmit={handleSubmit} className="admin-form-grid">
           <div className="admin-card">
-            <h3>Basic SEO</h3>
+            <h3>SEO Basics</h3>
           
-          <div className="form-group">
-            <label htmlFor="siteTitle">Site Title</label>
-            <input
-              type="text"
-              id="siteTitle"
-              value={seoSettings.siteTitle}
-              onChange={(e) => setSeoSettings(prev => ({ ...prev, siteTitle: e.target.value }))}
-              required
-            />
-            <small>This appears in search results and browser tabs</small>
-          </div>
+            <div className="form-group">
+              <label htmlFor="blogTitle">Blog Title</label>
+              <input
+                type="text"
+                id="blogTitle"
+                value={settings.blogTitle}
+                onChange={(e) => setSettings(prev => ({ ...prev, blogTitle: e.target.value }))}
+                required
+              />
+              <small>This appears in search results and browser tabs</small>
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="siteDescription">Site Description</label>
-            <textarea
-              id="siteDescription"
-              value={seoSettings.siteDescription}
-              onChange={(e) => setSeoSettings(prev => ({ ...prev, siteDescription: e.target.value }))}
-              rows={3}
-              required
-            />
-            <small>Meta description for search engines (150-160 characters recommended)</small>
-          </div>
+            <div className="form-group">
+              <label htmlFor="blogDescription">Blog Description</label>
+              <textarea
+                id="blogDescription"
+                value={settings.blogDescription}
+                onChange={(e) => setSettings(prev => ({ ...prev, blogDescription: e.target.value }))}
+                rows={3}
+                required
+              />
+              <small>Meta description for search engines (150-160 characters recommended)</small>
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="siteKeywords">Keywords</label>
-            <input
-              type="text"
-              id="siteKeywords"
-              value={seoSettings.siteKeywords}
-              onChange={(e) => setSeoSettings(prev => ({ ...prev, siteKeywords: e.target.value }))}
-              placeholder="keyword1, keyword2, keyword3"
-            />
-            <small>Comma-separated keywords related to your content</small>
-          </div>
+            <div className="form-group">
+              <label htmlFor="blogKeywords">Keywords</label>
+              <input
+                type="text"
+                id="blogKeywords"
+                value={settings.blogKeywords}
+                onChange={(e) => setSettings(prev => ({ ...prev, blogKeywords: e.target.value }))}
+                placeholder="keyword1, keyword2, keyword3"
+              />
+              <small>Comma-separated keywords related to your content</small>
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="canonicalUrl">Canonical URL</label>
-            <input
-              type="url"
-              id="canonicalUrl"
-              value={seoSettings.canonicalUrl}
-              onChange={(e) => setSeoSettings(prev => ({ ...prev, canonicalUrl: e.target.value }))}
-              required
-            />
-            <small>The main URL of your blog</small>
-          </div>
+            <div className="form-group">
+              <label htmlFor="siteUrl">Site URL</label>
+              <input
+                type="url"
+                id="siteUrl"
+                value={settings.siteUrl}
+                onChange={(e) => setSettings(prev => ({ ...prev, siteUrl: e.target.value }))}
+                required
+              />
+              <small>The main URL of your blog</small>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="authorName">Author Name</label>
+              <input
+                type="text"
+                id="authorName"
+                value={settings.authorName}
+                onChange={(e) => setSettings(prev => ({ ...prev, authorName: e.target.value }))}
+                required
+              />
+            </div>
           </div>
 
           <div className="admin-card">
-            <h3>Social Media / Open Graph</h3>
+            <h3>Social Media & Open Graph</h3>
           
-          <div className="form-group">
-            <label htmlFor="ogImage">Open Graph Image URL</label>
-            <input
-              type="url"
-              id="ogImage"
-              value={seoSettings.ogImage}
-              onChange={(e) => setSeoSettings(prev => ({ ...prev, ogImage: e.target.value }))}
-            />
-            <small>Image shown when your blog is shared on social media (1200x630px recommended)</small>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="twitterCard">Twitter Card Type</label>
-            <select
-              id="twitterCard"
-              value={seoSettings.twitterCard}
-              onChange={(e) => setSeoSettings(prev => ({ ...prev, twitterCard: e.target.value }))}
-            >
-              <option value="summary">Summary</option>
-              <option value="summary_large_image">Summary with Large Image</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="twitterCreator">Twitter Creator Handle</label>
-            <input
-              type="text"
-              id="twitterCreator"
-              value={seoSettings.twitterCreator}
-              onChange={(e) => setSeoSettings(prev => ({ ...prev, twitterCreator: e.target.value }))}
-              placeholder="@username"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="themeColor">Theme Color</label>
-            <input
-              type="color"
-              id="themeColor"
-              value={seoSettings.themeColor}
-              onChange={(e) => setSeoSettings(prev => ({ ...prev, themeColor: e.target.value }))}
-            />
-            <small>Color for mobile browser UI</small>
-          </div>
-        </div>
-
-        <div className="settings-section">
-          <h3>Search Engine Settings</h3>
-          
-          <div className="form-group">
-            <label className="checkbox-label">
+            <div className="form-group">
+              <label htmlFor="ogImage">Open Graph Image URL</label>
               <input
-                type="checkbox"
-                checked={seoSettings.enableSitemap}
-                onChange={(e) => setSeoSettings(prev => ({ ...prev, enableSitemap: e.target.checked }))}
+                type="url"
+                id="ogImage"
+                value={settings.ogImage}
+                onChange={(e) => setSettings(prev => ({ ...prev, ogImage: e.target.value }))}
               />
-              Generate XML Sitemap
-            </label>
-          </div>
+              <small>Image shown when your blog is shared on social media (1200x630px recommended)</small>
+            </div>
 
-          <div className="form-group">
-            <label className="checkbox-label">
+            <div className="form-group">
+              <label htmlFor="twitterHandle">Twitter Handle</label>
               <input
-                type="checkbox"
-                checked={seoSettings.enableRobots}
-                onChange={(e) => setSeoSettings(prev => ({ ...prev, enableRobots: e.target.checked }))}
+                type="text"
+                id="twitterHandle"
+                value={settings.twitterHandle}
+                onChange={(e) => setSettings(prev => ({ ...prev, twitterHandle: e.target.value }))}
+                placeholder="@username"
               />
-              Generate Robots.txt
-            </label>
-          </div>
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="robotsContent">Robots.txt Content</label>
-            <input
-              type="text"
-              id="robotsContent"
-              value={seoSettings.robotsContent}
-              onChange={(e) => setSeoSettings(prev => ({ ...prev, robotsContent: e.target.value }))}
-              placeholder="index, follow"
-            />
-          </div>
-        </div>
+            <div className="form-group">
+              <label htmlFor="themeColor">Theme Color</label>
+              <input
+                type="color"
+                id="themeColor"
+                value={settings.themeColor}
+                onChange={(e) => setSettings(prev => ({ ...prev, themeColor: e.target.value }))}
+              />
+              <small>Color for mobile browser UI and app theming</small>
+            </div>
 
-        <div className="settings-section">
-          <h3>Analytics</h3>
-          
-          <div className="form-group">
-            <label htmlFor="googleAnalyticsId">Google Analytics ID</label>
-            <input
-              type="text"
-              id="googleAnalyticsId"
-              value={seoSettings.googleAnalyticsId}
-              onChange={(e) => setSeoSettings(prev => ({ ...prev, googleAnalyticsId: e.target.value }))}
-              placeholder="GA_MEASUREMENT_ID"
-            />
-          </div>
+            <div className="form-group">
+              <label htmlFor="favicon">Favicon URL</label>
+              <input
+                type="text"
+                id="favicon"
+                value={settings.favicon}
+                onChange={(e) => setSettings(prev => ({ ...prev, favicon: e.target.value }))}
+                placeholder="/favicon.ico"
+              />
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="googleSearchConsoleId">Google Search Console ID</label>
-            <input
-              type="text"
-              id="googleSearchConsoleId"
-              value={seoSettings.googleSearchConsoleId}
-              onChange={(e) => setSeoSettings(prev => ({ ...prev, googleSearchConsoleId: e.target.value }))}
-              placeholder="google-site-verification content"
-            />
-          </div>
+            <div className="form-group">
+              <label htmlFor="googleAnalyticsId">Google Analytics ID</label>
+              <input
+                type="text"
+                id="googleAnalyticsId"
+                value={settings.googleAnalyticsId}
+                onChange={(e) => setSettings(prev => ({ ...prev, googleAnalyticsId: e.target.value }))}
+                placeholder="G-XXXXXXXXXX"
+              />
+              <small>Optional: For tracking website analytics</small>
+            </div>
           </div>
         </form>
       </div>

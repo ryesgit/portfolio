@@ -7,8 +7,8 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeKatex from "rehype-katex";
 import rehypeRaw from "rehype-raw";
 import "katex/dist/katex.min.css";
-import { getBlogPostBySlug } from "~/lib/blog.server";
-import { type BlogPost } from "~/lib/blog.client";
+import { getBlogPostBySlug, getBlogMetaServer } from "~/lib/blog.server";
+import { type BlogPost, type BlogMeta } from "~/lib/blog.client";
 import "~/styles/blog.css";
 
 // Client-side utility function
@@ -19,7 +19,7 @@ function getFirstImageFromContent(content: string): string | null {
 }
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  if (!data?.post) {
+  if (!data?.post || !data?.meta) {
     return [
       { title: "Post Not Found - Chug Blogs" },
       {
@@ -29,16 +29,15 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     ];
   }
 
-  const { post } = data;
+  const { post, meta } = data;
   const seoImage =
-    getFirstImageFromContent(post.content) ||
-    "https://blog.leeryan.dev/og-image.jpg";
+    getFirstImageFromContent(post.content) || meta.ogImage;
 
   return [
-    { title: `${post.title} - Chug Blogs` },
+    { title: `${post.title} - ${meta.blogTitle}` },
     { name: "description", content: post.excerpt },
     { name: "keywords", content: post.tags.join(", ") },
-    { name: "author", content: "Lee Ryan Soliman" },
+    { name: "author", content: meta.authorName },
     { name: "robots", content: "index, follow" },
 
     // Open Graph / Facebook
@@ -47,14 +46,14 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { property: "og:description", content: post.excerpt },
     {
       property: "og:url",
-      content: `https://blog.leeryan.dev/post/${post.slug}`,
+      content: `${meta.siteUrl}/post/${post.slug}`,
     },
-    { property: "og:site_name", content: "Chug Blogs" },
+    { property: "og:site_name", content: meta.blogTitle },
     { property: "og:image", content: seoImage },
     { property: "og:image:width", content: "1200" },
     { property: "og:image:height", content: "630" },
     { property: "og:locale", content: "en_US" },
-    { property: "article:author", content: "Lee Ryan Soliman" },
+    { property: "article:author", content: meta.authorName },
     { property: "article:published_time", content: post.publishDate },
     { property: "article:section", content: post.category },
     ...post.tags.map((tag) => ({ property: "article:tag", content: tag })),
@@ -64,14 +63,14 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { name: "twitter:title", content: post.title },
     { name: "twitter:description", content: post.excerpt },
     { name: "twitter:image", content: seoImage },
-    { name: "twitter:creator", content: "@leeryansoliman" },
+    { name: "twitter:creator", content: meta.twitterHandle },
 
     // Additional SEO
-    { name: "theme-color", content: "#dc2626" },
+    { name: "theme-color", content: meta.themeColor },
     {
       tagName: "link",
       rel: "canonical",
-      href: `https://blog.leeryan.dev/post/${post.slug}`,
+      href: `${meta.siteUrl}/post/${post.slug}`,
     },
   ];
 };
@@ -84,13 +83,16 @@ export async function loader({ params }: LoaderFunctionArgs) {
   }
 
   try {
-    const post = await getBlogPostBySlug(slug);
+    const [post, meta] = await Promise.all([
+      getBlogPostBySlug(slug),
+      getBlogMetaServer()
+    ]);
 
     if (!post) {
       throw new Response("Not Found", { status: 404 });
     }
 
-    return { post };
+    return { post, meta };
   } catch (error) {
     console.error("Error loading post:", error);
     throw new Response("Not Found", { status: 404 });

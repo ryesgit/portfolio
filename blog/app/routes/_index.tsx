@@ -1,43 +1,61 @@
-import type { MetaFunction } from "react-router";
-import { Link } from "react-router";
+import type { MetaFunction, LoaderFunctionArgs } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import { useState, useEffect } from "react";
 import BlogSidebar from "~/components/BlogSidebar";
-import type { BlogPost } from "~/lib/blog.client";
+import type { BlogPost, BlogMeta } from "~/lib/blog.client";
+import { getBlogMetaServer } from "~/lib/blog.server";
 import "~/styles/blog.css";
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const meta = data?.meta || {
+    blogTitle: 'Chug Blogs',
+    blogDescription: 'A modern blog powered by React Router and Firebase',
+    blogKeywords: 'blog, tech, programming, development',
+    authorName: 'Lee Ryan Soliman',
+    siteUrl: 'https://blog.leeryan.dev',
+    ogImage: 'https://blog.leeryan.dev/og-image.jpg',
+    twitterHandle: '@leeryansoliman',
+    themeColor: '#dc2626'
+  };
+
   return [
-    { title: "Chug Blogs - Tech, Science, Life & Meta Thoughts" },
-    { name: "description", content: "Personal blog by Lee Ryan Soliman featuring thoughts on technology, science, life, and meta topics. Explore insights from a software engineer's perspective." },
-    { name: "keywords", content: "blog, technology, science, life, meta, software engineering, programming, web development, Lee Ryan Soliman" },
-    { name: "author", content: "Lee Ryan Soliman" },
+    { title: meta.blogTitle },
+    { name: "description", content: meta.blogDescription },
+    { name: "keywords", content: meta.blogKeywords },
+    { name: "author", content: meta.authorName },
     { name: "robots", content: "index, follow" },
     
     // Open Graph / Facebook
     { property: "og:type", content: "website" },
-    { property: "og:title", content: "Chug Blogs - Tech, Science, Life & Meta Thoughts" },
-    { property: "og:description", content: "Personal blog by Lee Ryan Soliman featuring thoughts on technology, science, life, and meta topics." },
-    { property: "og:url", content: "https://blog.leeryan.dev" },
-    { property: "og:site_name", content: "Chug Blogs" },
-    { property: "og:image", content: "https://blog.leeryan.dev/og-image.jpg" },
+    { property: "og:title", content: meta.blogTitle },
+    { property: "og:description", content: meta.blogDescription },
+    { property: "og:url", content: meta.siteUrl },
+    { property: "og:site_name", content: meta.blogTitle },
+    { property: "og:image", content: meta.ogImage },
     { property: "og:image:width", content: "1200" },
     { property: "og:image:height", content: "630" },
     { property: "og:locale", content: "en_US" },
     
     // Twitter
     { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: "Chug Blogs - Tech, Science, Life & Meta Thoughts" },
-    { name: "twitter:description", content: "Personal blog by Lee Ryan Soliman featuring thoughts on technology, science, life, and meta topics." },
-    { name: "twitter:image", content: "https://blog.leeryan.dev/og-image.jpg" },
-    { name: "twitter:creator", content: "@leeryansoliman" },
+    { name: "twitter:title", content: meta.blogTitle },
+    { name: "twitter:description", content: meta.blogDescription },
+    { name: "twitter:image", content: meta.ogImage },
+    { name: "twitter:creator", content: meta.twitterHandle },
     
     // Additional SEO
-    { name: "theme-color", content: "#dc2626" },
-    { tagName: "link", rel: "canonical", href: "https://blog.leeryan.dev" },
+    { name: "theme-color", content: meta.themeColor },
+    { tagName: "link", rel: "canonical", href: meta.siteUrl },
   ];
 };
 
+export async function loader() {
+  const meta = await getBlogMetaServer();
+  return { meta };
+}
+
 export default function BlogIndex() {
+  const { meta } = useLoaderData<typeof loader>();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -63,7 +81,7 @@ export default function BlogIndex() {
         <div className="blog-content">
           <div className="blog-main">
             <div className="blog-header">
-              <h1>Chug Blogs</h1>
+              <h1>{meta?.blogTitle || 'Chug Blogs'}</h1>
               <p>Loading posts...</p>
             </div>
           </div>
@@ -77,8 +95,8 @@ export default function BlogIndex() {
       <div className="blog-content">
         <div className="blog-main">
           <div className="blog-header">
-            <h1>Chug Blogs</h1>
-            <p>Thoughts on tech, science, life, and everything in between</p>
+            <h1>{meta?.blogTitle || 'Chug Blogs'}</h1>
+            <p>{meta?.blogDescription || 'Thoughts on tech, science, life, and everything in between'}</p>
           </div>
 
           <div className="blog-controls">

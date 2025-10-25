@@ -8,7 +8,9 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
-  doc
+  doc,
+  getDoc,
+  setDoc
 } from 'firebase/firestore';
 import { db } from './firebase.client';
 
@@ -37,7 +39,21 @@ export interface BlogPostInput {
   published?: boolean;
 }
 
+export interface BlogMeta {
+  blogTitle: string;
+  blogDescription: string;
+  blogKeywords: string;
+  authorName: string;
+  siteUrl: string;
+  ogImage: string;
+  twitterHandle: string;
+  googleAnalyticsId: string;
+  favicon: string;
+  themeColor: string;
+}
+
 const COLLECTION_NAME = 'blogPosts';
+const META_DOCUMENT_ID = 'settings';
 
 // Convert Firestore document to BlogPost
 const convertFirestoreDoc = (doc: QueryDocumentSnapshot): BlogPost => {
@@ -201,6 +217,50 @@ export const togglePublishStatus = async (id: string, published: boolean): Promi
     return true;
   } catch (error) {
     console.error('Error toggling publish status:', error);
+    throw error;
+  }
+};
+
+// Get blog meta settings
+export const getBlogMeta = async (): Promise<BlogMeta | null> => {
+  try {
+    const docRef = doc(db, 'meta', META_DOCUMENT_ID);
+    const docSnap = await getDoc(docRef);
+    
+    if (docSnap.exists()) {
+      return docSnap.data() as BlogMeta;
+    } else {
+      // Return default settings if no document exists
+      return {
+        blogTitle: 'Chug Blogs',
+        blogDescription: 'A modern blog powered by React Router and Firebase',
+        blogKeywords: 'blog, tech, programming, development',
+        authorName: 'Lee Ryan Soliman',
+        siteUrl: 'https://blog.leeryan.dev',
+        ogImage: 'https://blog.leeryan.dev/og-image.jpg',
+        twitterHandle: '@leeryansoliman',
+        googleAnalyticsId: '',
+        favicon: '/favicon.ico',
+        themeColor: '#dc2626'
+      };
+    }
+  } catch (error) {
+    console.error('Error fetching blog meta:', error);
+    return null;
+  }
+};
+
+// Update blog meta settings
+export const updateBlogMeta = async (meta: BlogMeta): Promise<boolean> => {
+  try {
+    const docRef = doc(db, 'meta', META_DOCUMENT_ID);
+    await setDoc(docRef, {
+      ...meta,
+      updatedAt: Timestamp.now()
+    });
+    return true;
+  } catch (error) {
+    console.error('Error updating blog meta:', error);
     throw error;
   }
 };
