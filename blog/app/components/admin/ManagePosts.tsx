@@ -11,6 +11,7 @@ export default function ManagePosts({ onBack, onEditPost }: ManagePostsProps) {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'published' | 'draft'>('all');
+  const [draftAccessError, setDraftAccessError] = useState<string | null>(null);
 
   useEffect(() => {
     // Add a small delay to ensure Firebase is properly initialized
@@ -31,9 +32,26 @@ export default function ManagePosts({ onBack, onEditPost }: ManagePostsProps) {
         // Get published posts
         const publishedPosts = await getBlogPosts();
         
-        // Note: Draft posts require Firestore security rules to allow authenticated reads
-        // For now, only showing published posts due to permission restrictions
+        // Try to get unpublished posts (drafts) if authenticated as admin
         let draftPosts: any[] = [];
+        try {
+          const draftsQuery = query(
+            collection(db, 'blogPosts'),
+            where('published', '==', false)
+          );
+          const draftsSnapshot = await getDocs(draftsQuery);
+          draftPosts = draftsSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            publishDate: doc.data().publishDate?.toDate?.()?.toISOString?.()?.split('T')[0] || doc.data().publishDate,
+            published: false
+          }));
+          console.log('ManagePosts: Successfully loaded', draftPosts.length, 'draft posts');
+        } catch (draftError) {
+          console.log('Could not load draft posts (may need authentication or Firestore rules update):', draftError);
+          setDraftAccessError('Draft posts unavailable - check Firestore permissions');
+          // Continue without draft posts if access fails
+        }
         
         // Combine published and draft posts
         const allPosts = [...publishedPosts, ...draftPosts];
@@ -123,6 +141,9 @@ export default function ManagePosts({ onBack, onEditPost }: ManagePostsProps) {
 
       <div className="admin-user-info mb-6 flex justify-between items-center bg-gray-800 p-4 rounded-lg">
         <button onClick={onBack} className="admin-btn secondary">← Back to Dashboard</button>
+        {draftAccessError && (
+          <div className="text-red-400 text-sm">{draftAccessError}</div>
+        )}
         <div className="posts-filter">
           <button 
             className={`admin-btn ${filter === 'all' ? 'primary' : 'secondary'}`}
