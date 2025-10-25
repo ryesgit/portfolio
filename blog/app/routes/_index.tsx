@@ -66,9 +66,8 @@ export default function BlogIndex() {
   useEffect(() => {
     const loadPosts = async () => {
       try {
-        const { getAllBlogPosts } = await import('~/lib/blog.client');
-        const allPosts = await getAllBlogPosts();
-        const fetchedPosts = allPosts.filter(post => post.published);
+        const { getBlogPosts } = await import('~/lib/blog.client');
+        const fetchedPosts = await getBlogPosts();
         setAllPosts(fetchedPosts);
         setFilteredPosts(fetchedPosts);
       } catch (error) {
