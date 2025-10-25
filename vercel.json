@@ -1,33 +1,12 @@
 {
   "name": "portfolio-blog",
-  "buildCommand": "npm run build:blog",
-  "outputDirectory": "dist-blog",
+  "buildCommand": "cd blog && pnpm install && pnpm run build",
+  "outputDirectory": "blog/build/client",
   "installCommand": "pnpm install",
-  "devCommand": "npm run dev:blog",
   "framework": null,
-  "rewrites": [
-    {
-      "source": "/post/:slug",
-      "destination": "/api/og?slug=:slug",
-      "has": [
-        {
-          "type": "header",
-          "key": "user-agent",
-          "value": ".*(bot|crawl|slurp|spider|facebook|twitter|linkedin|whatsapp|telegram|discord|slack|preview).*"
-        }
-      ]
-    },
-    {
-      "source": "/post/:slug",
-      "destination": "/blog.html"
-    },
-    {
-      "source": "/admin(.*)",
-      "destination": "/blog.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/blog.html"
+  "functions": {
+    "blog/build/server/index.js": {
+      "runtime": "nodejs20.x"
     }
-  ]
+  }
 }
