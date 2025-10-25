@@ -36,6 +36,54 @@
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- SEO Script for Social Media Crawlers -->
+    <script>
+      // Check if accessing a blog post URL and update meta tags for crawlers
+      (function() {
+        const path = window.location.pathname;
+        const userAgent = navigator.userAgent;
+        const isCrawler = /bot|crawl|slurp|spider|facebook|twitter|linkedin|whatsapp/i.test(userAgent);
+        
+        if (path.startsWith('/post/') && isCrawler) {
+          const slug = path.replace('/post/', '');
+          
+          // Update title
+          document.title = `Blog Post: ${slug} - Chug Blogs`;
+          
+          // Update description meta tag
+          const descMeta = document.querySelector('meta[name="description"]');
+          if (descMeta) {
+            descMeta.content = `Read this blog post about ${slug} on Chug Blogs by Lee Ryan Soliman.`;
+          }
+          
+          // Update Open Graph meta tags
+          const ogTitle = document.querySelector('meta[property="og:title"]');
+          if (ogTitle) ogTitle.content = `Blog Post: ${slug} - Chug Blogs`;
+          
+          const ogDesc = document.querySelector('meta[property="og:description"]');
+          if (ogDesc) ogDesc.content = `Read this blog post about ${slug} on Chug Blogs by Lee Ryan Soliman.`;
+          
+          const ogUrl = document.querySelector('meta[property="og:url"]');
+          if (ogUrl) ogUrl.content = `https://blog.leeryan.dev/post/${slug}`;
+          
+          const ogType = document.querySelector('meta[property="og:type"]');
+          if (ogType) ogType.content = 'article';
+          
+          // Update Twitter meta tags
+          const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+          if (twitterTitle) twitterTitle.content = `Blog Post: ${slug} - Chug Blogs`;
+          
+          const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+          if (twitterDesc) twitterDesc.content = `Read this blog post about ${slug} on Chug Blogs by Lee Ryan Soliman.`;
+          
+          // Update canonical URL
+          const canonical = document.querySelector('link[rel="canonical"]');
+          if (canonical) canonical.href = `https://blog.leeryan.dev/post/${slug}`;
+        }
+      })();
+    </script>
+    
     <script type="module" src="/src/blog-main.tsx"></script>
   </body>
 </html>

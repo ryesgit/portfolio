@@ -26,7 +26,14 @@ function BlogApp() {
   }, []);
 
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-500 mb-4">Loading...</h1>
+          <p className="text-gray-300">Please wait while we load the blog</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -38,16 +45,19 @@ function BlogApp() {
             <meta name="apple-mobile-web-app-title" content="Chug Blogs" />
           </Helmet>
           <Router>
-            <div className="blog-app dark">
-              <main className="main-content">
-                <Routes>
-                  <Route path="/" element={<BlogList />} />
-                  <Route path="/post/:slug" element={<BlogPost />} />
-                  <Route path="/admin/*" element={<Admin />} />
-                  <Route path="*" element={<div>Page not found</div>} />
-                </Routes>
-              </main>
-            </div>
+            <Routes>
+              <Route path="/" element={<BlogList />} />
+              <Route path="/post/:slug" element={<BlogPost />} />
+              <Route path="/admin/*" element={<Admin />} />
+              <Route path="*" element={
+                <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+                  <div className="text-center">
+                    <h1 className="text-4xl font-bold text-red-500 mb-4">404</h1>
+                    <p className="text-gray-300">Page not found</p>
+                  </div>
+                </div>
+              } />
+            </Routes>
           </Router>
         </AuthProvider>
       </BlogDarkModeProvider>

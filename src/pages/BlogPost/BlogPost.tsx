@@ -76,35 +76,34 @@ function BlogPost() {
 
   if (loading) {
     return (
-      <div className={`${dark ? "dark" : "light"}`}>
-        <Container>
-          <main id="main-content">
-            <div className="blog-post-loading">
-              <div className="loading-spinner"></div>
-              <p>Loading post...</p>
+      <div className="min-h-screen bg-gray-900 text-white">
+        <div className="container mx-auto px-6 py-8">
+          <div className="flex items-center justify-center min-h-64">
+            <div className="text-center">
+              <div className="inline-block w-8 h-8 border-4 border-red-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+              <p className="text-gray-300">Loading post...</p>
             </div>
-          </main>
-        </Container>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (error || !post) {
     return (
-      <div className={`${dark ? "dark" : "light"}`}>
-        <Container>
-          <main id="main-content">
-            <Dashes color="indianred" />
-            <div className="blog-post-error">
-              <h1>Post Not Found</h1>
-              <p>{error || 'The blog post you are looking for does not exist.'}</p>
-              <Link to="/" className="back-home-link">
-                ← Back to Blog
-              </Link>
-            </div>
-            <Dashes color="indianred" />
-          </main>
-        </Container>
+      <div className="min-h-screen bg-gray-900 text-white">
+        <div className="container mx-auto px-6 py-8">
+          <div className="text-center py-16">
+            <h1 className="text-3xl font-bold text-red-500 mb-4">Post Not Found</h1>
+            <p className="text-gray-300 mb-6">{error || 'The blog post you are looking for does not exist.'}</p>
+            <Link 
+              to="/" 
+              className="inline-flex items-center text-red-400 hover:text-red-500 transition-colors"
+            >
+              ← Back to Blog
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }
@@ -240,92 +239,158 @@ function BlogPost() {
         </script>
       </Helmet>
       
-      <div className={`${dark ? "dark" : "light"}`}>
-        <Container>
-          <main id="main-content">
-            <Dashes color="indianred" />
+      <div className="min-h-screen bg-gray-900 text-white">
+        <div className="container mx-auto px-6 py-8">
+          {/* Navigation */}
+          <nav className="mb-8">
+            <Link 
+              to="/" 
+              className="inline-flex items-center text-red-400 hover:text-red-500 transition-colors"
+            >
+              ← Back to Blog
+            </Link>
+          </nav>
+
+          {/* Article Header */}
+          <header className="mb-8">
+            <div className="mb-4">
+              <span className="bg-red-600 text-white px-3 py-1 rounded text-sm font-semibold">
+                {post.category}
+              </span>
+            </div>
             
-            <article className="blog-post-detail">
-              <div className="post-header">
-                <Link to="/" className="back-link">
-                  ← Back to Blog
-                </Link>
-                
-                <div className="post-meta">
-                  <span className="post-category">{post.category}</span>
-                  <span className="post-date">{formatDate(post.publishDate)}</span>
-                  <span className="read-time">{post.readTime} min read</span>
-                </div>
-                
-                <h1 className="post-title">{post.title}</h1>
-                
-                <div className="post-tags">
-                  {post.tags.map((tag, index) => (
-                    <span key={index} className="tag">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="post-content markdown-content">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeHighlight, rehypeRaw]}
-                  components={{
-                    img: ({ src, alt, ...props }) => (
-                      <img 
-                        src={src} 
-                        alt={alt} 
-                        className="markdown-image"
-                        loading="lazy"
-                        {...props}
-                      />
-                    ),
-                    code: ({ children, className, ...props }) => {
-                      const match = /language-(\w+)/.exec(className || '');
-                      return match ? (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      ) : (
-                        <code className="inline-code" {...props}>
-                          {children}
-                        </code>
-                      );
-                    }
-                  }}
-                >
-                  {post.content}
-                </ReactMarkdown>
-              </div>
-              
-              <div className="post-footer">
-                <div className="post-info">
-                  <p className="post-excerpt-footer">
-                    <strong>Summary:</strong> {post.excerpt}
-                  </p>
-                </div>
-                
-                <div className="post-navigation">
-                  <Link to="/" className="nav-button">
-                    ← All Posts
-                  </Link>
-                </div>
-              </div>
-            </article>
+            <h1 className="text-4xl font-bold mb-4 leading-tight text-white">
+              {post.title}
+            </h1>
             
-            <Dashes color="indianred" />
+            <div className="flex flex-wrap items-center gap-4 text-gray-400 mb-6">
+              <span>
+                {formatDate(post.publishDate)}
+              </span>
+              <span>•</span>
+              <span>{post.readTime} min read</span>
+            </div>
+            
+            <p className="text-xl text-gray-300 leading-relaxed">
+              {post.excerpt}
+            </p>
+          </header>
+
+          {/* Article Content */}
+          <main className="max-w-none">
+            <div className="prose prose-lg prose-invert prose-red max-w-none">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeHighlight, rehypeRaw]}
+                components={{
+                  // Custom styling for code blocks
+                  pre: ({ children, ...props }) => (
+                    <pre className="bg-gray-800 rounded-lg p-4 overflow-x-auto" {...props}>
+                      {children}
+                    </pre>
+                  ),
+                  code: ({ children, className, ...props }) => {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return match ? (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    ) : (
+                      <code className="bg-gray-800 px-1 py-0.5 rounded text-red-400" {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                  // Custom styling for blockquotes
+                  blockquote: ({ children, ...props }) => (
+                    <blockquote className="border-l-4 border-red-600 pl-4 italic text-gray-300" {...props}>
+                      {children}
+                    </blockquote>
+                  ),
+                  // Custom styling for headings
+                  h1: ({ children, ...props }) => (
+                    <h1 className="text-3xl font-bold mt-8 mb-4 text-white" {...props}>
+                      {children}
+                    </h1>
+                  ),
+                  h2: ({ children, ...props }) => (
+                    <h2 className="text-2xl font-bold mt-6 mb-3 text-white" {...props}>
+                      {children}
+                    </h2>
+                  ),
+                  h3: ({ children, ...props }) => (
+                    <h3 className="text-xl font-semibold mt-4 mb-2 text-white" {...props}>
+                      {children}
+                    </h3>
+                  ),
+                  // Custom styling for links
+                  a: ({ children, href, ...props }) => (
+                    <a 
+                      href={href}
+                      className="text-red-400 hover:text-red-500 underline"
+                      target={href?.startsWith('http') ? '_blank' : undefined}
+                      rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      {...props}
+                    >
+                      {children}
+                    </a>
+                  ),
+                  // Custom styling for lists
+                  ul: ({ children, ...props }) => (
+                    <ul className="list-disc list-inside space-y-1 text-gray-300" {...props}>
+                      {children}
+                    </ul>
+                  ),
+                  ol: ({ children, ...props }) => (
+                    <ol className="list-decimal list-inside space-y-1 text-gray-300" {...props}>
+                      {children}
+                    </ol>
+                  ),
+                  p: ({ children, ...props }) => (
+                    <p className="mb-4 leading-relaxed text-gray-300" {...props}>
+                      {children}
+                    </p>
+                  ),
+                  img: ({ src, alt, ...props }) => (
+                    <img 
+                      src={src} 
+                      alt={alt} 
+                      className="rounded-lg max-w-full h-auto my-6"
+                      loading="lazy"
+                      {...props}
+                    />
+                  ),
+                }}
+              >
+                {post.content}
+              </ReactMarkdown>
+            </div>
           </main>
-          <aside>
-            <footer style={{
-              textAlign: "center",
-              padding: "1rem 2rem",
-            }}>
-              © Soliman, {new Date().getFullYear()}
-            </footer>
-          </aside>
-        </Container>
+
+          {/* Tags */}
+          {post.tags && post.tags.length > 0 && (
+            <div className="mt-8 pt-6 border-t border-gray-700">
+              <h3 className="text-lg font-semibold mb-3 text-white">Tags</h3>
+              <div className="flex flex-wrap gap-2">
+                {post.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Footer */}
+          <footer className="mt-16 pt-8 border-t border-gray-700 text-center">
+            <p className="text-gray-400">
+              © 2025 Lee Ryan Soliman. Built with React & ❤️
+            </p>
+          </footer>
+        </div>
       </div>
     </>
   );

@@ -8,12 +8,12 @@
   "rewrites": [
     {
       "source": "/post/:slug",
-      "destination": "/api/post/:slug",
+      "destination": "/api/og?slug=:slug",
       "has": [
         {
           "type": "header",
           "key": "user-agent",
-          "value": ".*(bot|crawl|slurp|spider|facebook|twitter|linkedin|whatsapp).*"
+          "value": ".*(bot|crawl|slurp|spider|facebook|twitter|linkedin|whatsapp|telegram|discord|slack|preview).*"
         }
       ]
     },

@@ -16,28 +16,40 @@ const BlogPostCard = ({ post }: BlogPostCardProps) => {
   };
 
   return (
-    <article className="blog-post-card">
-      <div className="post-meta">
-        <span className="post-category">{post.category}</span>
-        <span className="post-date">{formatDate(post.publishDate)}</span>
-        <span className="read-time">{post.readTime} min read</span>
-      </div>
-      
-      <h2 className="post-title">{post.title}</h2>
-      
-      <p className="post-excerpt">{post.excerpt}</p>
-      
-      <div className="post-tags">
-        {post.tags.map((tag, index) => (
-          <span key={index} className="tag">
-            {tag}
+    <article className="bg-gray-800 rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow">
+      <div className="flex flex-wrap items-center justify-between mb-4">
+        <div className="flex items-center space-x-4">
+          <span className="bg-red-600 text-white px-3 py-1 rounded text-sm font-semibold">
+            {post.category}
           </span>
-        ))}
+          <span className="text-gray-400 text-sm">
+            {formatDate(post.publishDate)}
+          </span>
+        </div>
+        <span className="text-gray-500 text-sm">{post.readTime} min read</span>
       </div>
       
-      <Link to={`/post/${post.slug}`} className="read-more-btn">
-        Read More →
+      <Link to={`/post/${post.slug}`} className="group block">
+        <h2 className="text-2xl font-bold mb-3 group-hover:text-red-400 transition-colors text-white">
+          {post.title}
+        </h2>
+        <p className="text-gray-300 mb-4 leading-relaxed">
+          {post.excerpt}
+        </p>
       </Link>
+      
+      {post.tags && post.tags.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {post.tags.map((tag, index) => (
+            <span
+              key={index}
+              className="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+            >
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
     </article>
   );
 };

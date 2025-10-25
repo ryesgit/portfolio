@@ -112,57 +112,105 @@ const BlogList = () => {
         </script>
       </Helmet>
       
-      <div className="blog-list-container">
-      <div className="blog-content">
-        <div className="blog-main">
-          <div className="blog-header">
-            <h1>Chug Blogs</h1>
-            <p>Thoughts on tech, science, life, and everything in between</p>
+      <div className="min-h-screen bg-gray-900 text-white">
+        <div className="container mx-auto px-6 py-8">
+          {/* Header */}
+          <header className="mb-12 text-center">
+            <h1 className="text-4xl font-bold text-red-500 mb-4">Chug Blogs</h1>
+            <p className="text-xl text-gray-300 leading-relaxed">
+              Tech, Science, Life & Meta Thoughts
+            </p>
+            <p className="text-gray-400 mt-2">
+              Personal insights from a software engineer's perspective
+            </p>
+          </header>
+
+          {/* Search Controls */}
+          <div className="max-w-4xl mx-auto mb-8">
+            <div className="flex flex-wrap gap-4 items-center justify-between">
+              <input
+                type="text"
+                placeholder="Search posts..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="bg-gray-800 text-white px-4 py-2 rounded-lg border border-gray-700 focus:border-red-500 focus:outline-none flex-1 min-w-64"
+              />
+              
+              {/* Filters */}
+              <div className="flex gap-2">
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="bg-gray-800 text-white px-3 py-2 rounded-lg border border-gray-700 focus:border-red-500 focus:outline-none"
+                >
+                  <option value="">All Categories</option>
+                  {categories.map(category => (
+                    <option key={category} value={category}>{category}</option>
+                  ))}
+                </select>
+                
+                <select
+                  value={selectedTag}
+                  onChange={(e) => setSelectedTag(e.target.value)}
+                  className="bg-gray-800 text-white px-3 py-2 rounded-lg border border-gray-700 focus:border-red-500 focus:outline-none"
+                >
+                  <option value="">All Tags</option>
+                  {tags.map(tag => (
+                    <option key={tag} value={tag}>{tag}</option>
+                  ))}
+                </select>
+                
+                {(selectedCategory || selectedTag || searchQuery) && (
+                  <button
+                    onClick={() => {
+                      setSelectedCategory('');
+                      setSelectedTag('');
+                      setSearchQuery('');
+                    }}
+                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
 
-          <div className="blog-controls">
-            <input
-              type="text"
-              placeholder="Search posts..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="search-input"
-            />
-          </div>
-
-          <div className="blog-posts">
+          {/* Blog Posts Grid */}
+          <main className="max-w-4xl mx-auto">
             {loading ? (
-              Array.from({ length: 6 }).map((_, index) => (
-                <BlogPostSkeleton key={index} />
-              ))
+              <div className="space-y-8">
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <div key={index} className="bg-gray-800 rounded-lg p-6 animate-pulse">
+                    <div className="h-4 bg-gray-700 rounded w-24 mb-4"></div>
+                    <div className="h-6 bg-gray-700 rounded w-3/4 mb-3"></div>
+                    <div className="h-4 bg-gray-700 rounded w-full mb-2"></div>
+                    <div className="h-4 bg-gray-700 rounded w-2/3"></div>
+                  </div>
+                ))}
+              </div>
             ) : filteredPosts.length > 0 ? (
-              filteredPosts.map((post) => (
-                <BlogPostCard key={post.id} post={post} />
-              ))
+              <div className="space-y-8">
+                {filteredPosts.map((post) => (
+                  <BlogPostCard key={post.id} post={post} />
+                ))}
+              </div>
             ) : (
-              <div className="no-posts">
-                <h3>No posts found</h3>
-                <p>Try adjusting your search or filter criteria.</p>
+              <div className="text-center py-16">
+                <h3 className="text-xl font-semibold text-gray-300 mb-2">No posts found</h3>
+                <p className="text-gray-400">Try adjusting your search or filter criteria.</p>
               </div>
             )}
-          </div>
-        </div>
+          </main>
 
-        <BlogSidebar
-          categories={categories}
-          tags={tags}
-          selectedCategory={selectedCategory}
-          selectedTag={selectedTag}
-          onCategoryChange={setSelectedCategory}
-          onTagChange={setSelectedTag}
-          onClearFilters={() => {
-            setSelectedCategory('');
-            setSelectedTag('');
-            setSearchQuery('');
-          }}
-        />
+          {/* Footer */}
+          <footer className="mt-16 pt-8 border-t border-gray-700 text-center">
+            <p className="text-gray-400">
+              © 2025 Lee Ryan Soliman. Built with React & ❤️
+            </p>
+          </footer>
+        </div>
       </div>
-    </div>
     </>
   );
 };
