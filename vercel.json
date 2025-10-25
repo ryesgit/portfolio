@@ -1,12 +1,6 @@
 {
-  "name": "portfolio-blog",
   "buildCommand": "cd blog && pnpm install && pnpm run build",
   "outputDirectory": "blog/build/client",
   "installCommand": "pnpm install",
-  "framework": null,
-  "functions": {
-    "blog/build/server/index.js": {
-      "runtime": "nodejs20.x"
-    }
-  }
+  "framework": "react-router"
 }
