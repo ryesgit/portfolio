@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeRaw from 'rehype-raw';
 import { type BlogPost } from '~/lib/blog.client';
 
 interface CreatePostProps {
@@ -20,6 +24,7 @@ export default function CreatePost({ onBack, onPostCreated }: CreatePostProps) {
   });
 
   const [saving, setSaving] = useState(false);
+  const [previewMode, setPreviewMode] = useState(false);
 
   const generateSlug = (title: string) => {
     return title
@@ -128,16 +133,111 @@ export default function CreatePost({ onBack, onPostCreated }: CreatePostProps) {
             </div>
 
             <div className="form-group">
-              <label htmlFor="content">Content *</label>
-              <textarea
-                id="content"
-                value={formData.content}
-                onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                required
-                placeholder="Write your post content in Markdown"
-                rows={25}
-                style={{ minHeight: '500px' }}
-              />
+              <div className="content-editor-header">
+                <label htmlFor="content">Content *</label>
+                <div className="preview-tabs">
+                  <button
+                    type="button"
+                    className={`tab-btn ${!previewMode ? 'active' : ''}`}
+                    onClick={() => setPreviewMode(false)}
+                  >
+                    Write
+                  </button>
+                  <button
+                    type="button"
+                    className={`tab-btn ${previewMode ? 'active' : ''}`}
+                    onClick={() => setPreviewMode(true)}
+                  >
+                    Preview
+                  </button>
+                </div>
+              </div>
+              
+              {!previewMode ? (
+                <textarea
+                  id="content"
+                  value={formData.content}
+                  onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
+                  required
+                  placeholder="Write your post content in Markdown"
+                  rows={25}
+                  style={{ minHeight: '500px' }}
+                />
+              ) : (
+                <div className="markdown-preview" style={{ minHeight: '500px' }}>
+                  {formData.content ? (
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeHighlight, rehypeRaw]}
+                      components={{
+                        pre: ({ children, ...props }) => (
+                          <pre className="code-block" {...props}>
+                            {children}
+                          </pre>
+                        ),
+                        code: ({ inline, children, ...props }) => 
+                          inline ? (
+                            <code className="inline-code" {...props}>
+                              {children}
+                            </code>
+                          ) : (
+                            <code {...props}>{children}</code>
+                          ),
+                        blockquote: ({ children, ...props }) => (
+                          <blockquote className="quote" {...props}>
+                            {children}
+                          </blockquote>
+                        ),
+                        h1: ({ children, ...props }) => (
+                          <h1 className="content-h1" {...props}>
+                            {children}
+                          </h1>
+                        ),
+                        h2: ({ children, ...props }) => (
+                          <h2 className="content-h2" {...props}>
+                            {children}
+                          </h2>
+                        ),
+                        h3: ({ children, ...props }) => (
+                          <h3 className="content-h3" {...props}>
+                            {children}
+                          </h3>
+                        ),
+                        a: ({ children, href, ...props }) => (
+                          <a 
+                            href={href}
+                            className="content-link"
+                            target={href?.startsWith('http') ? '_blank' : undefined}
+                            rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                            {...props}
+                          >
+                            {children}
+                          </a>
+                        ),
+                        ul: ({ children, ...props }) => (
+                          <ul className="content-list" {...props}>
+                            {children}
+                          </ul>
+                        ),
+                        ol: ({ children, ...props }) => (
+                          <ol className="content-list ordered" {...props}>
+                            {children}
+                          </ol>
+                        ),
+                        p: ({ children, ...props }) => (
+                          <p className="content-paragraph" {...props}>
+                            {children}
+                          </p>
+                        ),
+                      }}
+                    >
+                      {formData.content}
+                    </ReactMarkdown>
+                  ) : (
+                    <p className="preview-placeholder">Nothing to preview. Start writing in the Write tab to see your content rendered here.</p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
