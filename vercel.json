@@ -2,6 +2,5 @@
   "buildCommand": "cd blog && pnpm install && pnpm run build",
   "outputDirectory": "blog/build/client",
   "installCommand": "cd blog && pnpm install",
-  "framework": null,
-  "nodeVersion": "20"
+  "framework": null
 }
