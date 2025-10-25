@@ -1,5 +1,11 @@
 {
   "buildCommand": "cd blog && pnpm install && pnpm run build",
   "outputDirectory": "blog/build/client",
-  "installCommand": "cd blog && pnpm install"
+  "installCommand": "cd blog && pnpm install",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
