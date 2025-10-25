@@ -1,6 +1,7 @@
 {
   "buildCommand": "cd blog && pnpm install && pnpm run build",
   "outputDirectory": "blog/build/client",
-  "installCommand": "pnpm install",
-  "framework": "react-router"
+  "installCommand": "cd blog && pnpm install",
+  "framework": null,
+  "nodeVersion": "20"
 }
