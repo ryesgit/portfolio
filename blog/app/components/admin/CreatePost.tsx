@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -7,6 +7,7 @@ import rehypeHighlight from 'rehype-highlight';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import { type BlogPost } from '~/lib/blog.client';
+import { uploadBlogImage, generateImageMarkdown } from '~/lib/imageUpload.client';
 import 'katex/dist/katex.min.css';
 
 interface CreatePostProps {
@@ -29,6 +30,9 @@ export default function CreatePost({ onBack, onPostCreated }: CreatePostProps) {
 
   const [saving, setSaving] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const generateSlug = (title: string) => {
     return title
@@ -43,6 +47,96 @@ export default function CreatePost({ onBack, onPostCreated }: CreatePostProps) {
       title,
       slug: generateSlug(title)
     }));
+  };
+
+  const insertTextAtCursor = (text: string) => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const currentContent = formData.content;
+    const newContent = currentContent.substring(0, start) + text + currentContent.substring(end);
+    
+    setFormData(prev => ({ ...prev, content: newContent }));
+    
+    // Set cursor position after inserted text
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + text.length, start + text.length);
+    }, 0);
+  };
+
+  const handleImageUpload = async (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file');
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const result = await uploadBlogImage(file);
+      if (result) {
+        const markdown = generateImageMarkdown(result.url, file.name.split('.')[0]);
+        insertTextAtCursor(markdown);
+        toast.success('Image uploaded successfully!');
+      } else {
+        toast.error('Failed to upload image');
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      toast.error('Error uploading image');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handleImageUpload(file);
+    }
+    // Reset input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item.type.startsWith('image/')) {
+        e.preventDefault();
+        const file = item.getAsFile();
+        if (file) {
+          handleImageUpload(file);
+        }
+        break;
+      }
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      const file = files[0];
+      if (file.type.startsWith('image/')) {
+        handleImageUpload(file);
+      } else {
+        toast.error('Please drop an image file');
+      }
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -139,34 +233,66 @@ export default function CreatePost({ onBack, onPostCreated }: CreatePostProps) {
             <div className="form-group">
               <div className="content-editor-header">
                 <label htmlFor="content">Content *</label>
-                <div className="preview-tabs">
-                  <button
-                    type="button"
-                    className={`tab-btn ${!previewMode ? 'active' : ''}`}
-                    onClick={() => setPreviewMode(false)}
-                  >
-                    Write
-                  </button>
-                  <button
-                    type="button"
-                    className={`tab-btn ${previewMode ? 'active' : ''}`}
-                    onClick={() => setPreviewMode(true)}
-                  >
-                    Preview
-                  </button>
+                <div className="editor-controls">
+                  <div className="preview-tabs">
+                    <button
+                      type="button"
+                      className={`tab-btn ${!previewMode ? 'active' : ''}`}
+                      onClick={() => setPreviewMode(false)}
+                    >
+                      Write
+                    </button>
+                    <button
+                      type="button"
+                      className={`tab-btn ${previewMode ? 'active' : ''}`}
+                      onClick={() => setPreviewMode(true)}
+                    >
+                      Preview
+                    </button>
+                  </div>
+                  <div className="image-upload-controls">
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileSelect}
+                      style={{ display: 'none' }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={uploading}
+                      className="upload-btn"
+                      title="Upload image"
+                    >
+                      {uploading ? '⏳' : '📷'} {uploading ? 'Uploading...' : 'Upload Image'}
+                    </button>
+                  </div>
                 </div>
               </div>
               
               {!previewMode ? (
-                <textarea
-                  id="content"
-                  value={formData.content}
-                  onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                  required
-                  placeholder="Write your post content in Markdown"
-                  rows={25}
-                  style={{ minHeight: '500px' }}
-                />
+                <div className="textarea-container">
+                  <textarea
+                    ref={textareaRef}
+                    id="content"
+                    value={formData.content}
+                    onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
+                    onPaste={handlePaste}
+                    onDragOver={handleDragOver}
+                    onDrop={handleDrop}
+                    required
+                    placeholder="Write your post content in Markdown\n\nTip: You can paste images directly or drag & drop them here!"
+                    rows={25}
+                    style={{ minHeight: '500px' }}
+                    className={uploading ? 'uploading' : ''}
+                  />
+                  {uploading && (
+                    <div className="upload-overlay">
+                      <div className="upload-spinner">⏳ Uploading image...</div>
+                    </div>
+                  )}
+                </div>
               ) : (
                 <div className="markdown-preview" style={{ minHeight: '500px' }}>
                   {formData.content ? (

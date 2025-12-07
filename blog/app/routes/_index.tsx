@@ -3,7 +3,7 @@ import { Link, useLoaderData } from "react-router";
 import { useState, useEffect } from "react";
 import BlogSidebar from "~/components/BlogSidebar";
 import type { BlogPost, BlogMeta } from "~/lib/blog.client";
-import { getBlogMetaServer } from "~/lib/blog.server";
+import { getBlogMetaServer, getAllBlogPosts } from "~/lib/blog.server";
 import "~/styles/blog.css";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
@@ -50,35 +50,20 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export async function loader() {
-  const meta = await getBlogMetaServer();
-  return { meta };
+  const [meta, posts] = await Promise.all([
+    getBlogMetaServer(),
+    getAllBlogPosts()
+  ]);
+  return { meta, posts: posts || [] };
 }
 
 export default function BlogIndex() {
-  const { meta } = useLoaderData<typeof loader>();
-  const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { meta, posts } = useLoaderData<typeof loader>();
+  const [allPosts] = useState<BlogPost[]>(posts);
+  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(posts);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedTag, setSelectedTag] = useState('all');
-
-  useEffect(() => {
-    const loadPosts = async () => {
-      try {
-        const { getBlogPosts } = await import('~/lib/blog.client');
-        const fetchedPosts = await getBlogPosts();
-        setAllPosts(fetchedPosts);
-        setFilteredPosts(fetchedPosts);
-      } catch (error) {
-        console.error('Error loading posts:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    loadPosts();
-  }, []);
 
   // Filter posts when search term, category, or tag changes
   useEffect(() => {
@@ -110,21 +95,6 @@ export default function BlogIndex() {
   // Get unique categories and tags
   const categories = ['all', ...new Set(allPosts.map(post => post.category))];
   const tags = ['all', ...new Set(allPosts.flatMap(post => post.tags))];
-
-  if (loading) {
-    return (
-      <div className="blog-list-container">
-        <div className="blog-content">
-          <div className="blog-main">
-            <div className="blog-header">
-              <h1>{meta?.blogTitle || 'Chug Blogs'}</h1>
-              <p>Loading posts...</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="blog-list-container">

@@ -184,6 +184,45 @@ const getBlogPostBySlug = async (slug) => {
     return null;
   }
 };
+const getBlogPosts = async () => {
+  try {
+    const { initializeApp } = await import("firebase/app");
+    const { getFirestore, collection, query, where, getDocs } = await import("firebase/firestore");
+    const firebaseConfig = {
+      apiKey: "AIzaSyDN4Rw6cp-Eo8en4AY_HAQp2JECw05pV4I",
+      authDomain: "blogsite-a43e6.firebaseapp.com",
+      projectId: "blogsite-a43e6"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const q = query(
+      collection(db, "blogPosts"),
+      where("published", "==", true)
+    );
+    const querySnapshot = await getDocs(q);
+    const posts = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      posts.push({
+        id: doc.id,
+        title: data.title,
+        excerpt: data.excerpt,
+        content: data.content,
+        publishDate: data.publishDate.toDate().toISOString().split("T")[0],
+        category: data.category,
+        tags: Array.isArray(data.tags) ? data.tags : [],
+        slug: data.slug,
+        readTime: data.readTime,
+        published: data.published || false
+      });
+    });
+    posts.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+    return posts;
+  } catch (error) {
+    console.error("Firebase error:", error);
+    return [];
+  }
+};
 const getBlogMetaServer = async () => {
   try {
     const { initializeApp } = await import("firebase/app");
@@ -321,7 +360,7 @@ const meta$2 = ({
     }
   ];
 };
-async function loader$1() {
+async function loader$2() {
   const meta2 = await getBlogMetaServer();
   return {
     meta: meta2
@@ -337,9 +376,9 @@ const _index = UNSAFE_withComponentProps(function BlogIndex() {
     const loadPosts = async () => {
       try {
         const {
-          getBlogPosts
+          getBlogPosts: getBlogPosts2
         } = await import("./assets/blog.client-DWnBv3Qu.js");
-        const fetchedPosts = await getBlogPosts();
+        const fetchedPosts = await getBlogPosts2();
         setPosts(fetchedPosts);
       } catch (error) {
         console.error("Error loading posts:", error);
@@ -453,7 +492,7 @@ function BlogPostCard({
 const route1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: _index,
-  loader: loader$1,
+  loader: loader$2,
   meta: meta$2
 }, Symbol.toStringTag, { value: "Module" }));
 const signInWithGoogle = void 0;
@@ -1933,7 +1972,7 @@ const meta = ({
     }
   ];
 };
-async function loader({
+async function loader$1({
   params
 }) {
   const {
@@ -2175,10 +2214,49 @@ const post_$slug = UNSAFE_withComponentProps(function BlogPost() {
 const route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: post_$slug,
-  loader,
+  loader: loader$1,
   meta
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-kIcmPs6f.js", "imports": ["/assets/chunk-OIYGIGL5-CC10qnHu.js", "/assets/index-DNy3t6UW.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/assets/root-Ot8a10mp.js", "imports": ["/assets/chunk-OIYGIGL5-CC10qnHu.js", "/assets/index-DNy3t6UW.js"], "css": ["/assets/root-DIN8bCQ3.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/_index-CcyTIOgz.js", "imports": ["/assets/preload-helper-BXl3LOEh.js", "/assets/chunk-OIYGIGL5-CC10qnHu.js"], "css": ["/assets/blog-CunseU0i.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/admin": { "id": "routes/admin", "parentId": "root", "path": "admin", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/admin-TG1xeUES.js", "imports": ["/assets/chunk-OIYGIGL5-CC10qnHu.js", "/assets/index-DNy3t6UW.js", "/assets/firebase.client-BqOXwYna.js", "/assets/preload-helper-BXl3LOEh.js", "/assets/katex.min-DaXZ5bPm.js"], "css": ["/assets/admin-RaJiuU2v.css", "/assets/blog-CunseU0i.css", "/assets/katex-CyAuISp2.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/post.$slug": { "id": "routes/post.$slug", "parentId": "root", "path": "post/:slug", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/post._slug-DiEolG9k.js", "imports": ["/assets/chunk-OIYGIGL5-CC10qnHu.js", "/assets/katex.min-DaXZ5bPm.js", "/assets/firebase.client-BqOXwYna.js"], "css": ["/assets/blog-CunseU0i.css", "/assets/katex-CyAuISp2.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-3f751bec.js", "version": "3f751bec", "sri": void 0 };
+const loader = async ({
+  request
+}) => {
+  const [posts, meta2] = await Promise.all([getBlogPosts(), getBlogMetaServer()]);
+  const siteUrl = meta2?.siteUrl || "https://blog.leeryan.dev";
+  const postItems = posts.map((post) => {
+    return `
+    <url>
+      <loc>${siteUrl}/post/${post.slug}</loc>
+      <lastmod>${post.publishDate}</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.7</priority>
+    </url>
+    `;
+  }).join("");
+  const content = `<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      <url>
+        <loc>${siteUrl}/</loc>
+        <lastmod>${(/* @__PURE__ */ new Date()).toISOString().split("T")[0]}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+      </url>
+      ${postItems}
+    </urlset>
+  `;
+  return new Response(content, {
+    status: 200,
+    headers: {
+      "Content-Type": "application/xml",
+      "xml-version": "1.0",
+      "encoding": "UTF-8"
+    }
+  });
+};
+const route4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  loader
+}, Symbol.toStringTag, { value: "Module" }));
+const serverManifest = { "entry": { "module": "/assets/entry.client-Cj5xbrMB.js", "imports": ["/assets/chunk-OIYGIGL5-D4Q9vBi3.js", "/assets/index-CYnYMARw.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/assets/root-DYNVYiUK.js", "imports": ["/assets/chunk-OIYGIGL5-D4Q9vBi3.js", "/assets/index-CYnYMARw.js"], "css": ["/assets/root-DIN8bCQ3.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/_index-CZL7qPPh.js", "imports": ["/assets/preload-helper-BXl3LOEh.js", "/assets/chunk-OIYGIGL5-D4Q9vBi3.js"], "css": ["/assets/blog-CunseU0i.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/admin": { "id": "routes/admin", "parentId": "root", "path": "admin", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/admin-okFBkiRA.js", "imports": ["/assets/chunk-OIYGIGL5-D4Q9vBi3.js", "/assets/index-CYnYMARw.js", "/assets/firebase.client-sSuvymj8.js", "/assets/preload-helper-BXl3LOEh.js", "/assets/katex.min-DmWsjhYC.js"], "css": ["/assets/admin-RaJiuU2v.css", "/assets/blog-CunseU0i.css", "/assets/katex-CyAuISp2.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/post.$slug": { "id": "routes/post.$slug", "parentId": "root", "path": "post/:slug", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/post._slug-BLsi23VJ.js", "imports": ["/assets/chunk-OIYGIGL5-D4Q9vBi3.js", "/assets/katex.min-DmWsjhYC.js", "/assets/firebase.client-sSuvymj8.js"], "css": ["/assets/blog-CunseU0i.css", "/assets/katex-CyAuISp2.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/sitemap[.]xml": { "id": "routes/sitemap[.]xml", "parentId": "root", "path": "sitemap.xml", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/sitemap_._xml-l0sNRNKZ.js", "imports": [], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-aecbdeac.js", "version": "aecbdeac", "sri": void 0 };
 const assetsBuildDirectory = "build/client";
 const basename = "/";
 const future = { "v8_middleware": false, "unstable_optimizeDeps": false, "unstable_splitRouteModules": false, "unstable_subResourceIntegrity": false, "unstable_viteEnvironmentApi": false };
@@ -2220,6 +2298,14 @@ const routes = {
     index: void 0,
     caseSensitive: void 0,
     module: route3
+  },
+  "routes/sitemap[.]xml": {
+    id: "routes/sitemap[.]xml",
+    parentId: "root",
+    path: "sitemap.xml",
+    index: void 0,
+    caseSensitive: void 0,
+    module: route4
   }
 };
 export {
